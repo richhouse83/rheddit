@@ -10,19 +10,19 @@ export default class ArticlesList extends Component {
   };
 
   componentDidMount = () => {
-    this.getTopics();
+    this.getArticles();
   };
 
   componentDidUpdate = (prevProps) => {
     if (this.props.topic !== prevProps.topic) {
       this.setState({ isLoading: true });
-      this.getTopics();
+      this.getArticles();
     }
   };
 
-  getTopics = () => {
-    const { topic } = this.props;
-    api.fetchArticlesByTopic(topic).then((articles) => {
+  getArticles = () => {
+    const { topic, username } = this.props;
+    api.fetchArticles(topic, username).then((articles) => {
       this.setState({ articles, isLoading: false });
     });
   };

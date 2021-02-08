@@ -18,11 +18,18 @@ export default function ArticleCard(props) {
       <Link to={`/articles/${props.article_id}`}>
         <p className="synop">{synop}</p>
       </Link>
-      <p className="author">by: {props.author}</p>
+      <p>
+        by:
+        <Link to={`/users/${props.author}/articles`} className="author">
+          {props.author}
+        </Link>
+      </p>
       <button className="vote-button up">^</button>
       <button className="vote-button down">v</button>
       <p className="votes">{props.votes}</p>
-      <Link to={`/${props.article_id}/comments`}>Comments</Link>
+      <Link to={`/${props.article_id}/comments`}>
+        {props.comment_count} Comments
+      </Link>
     </li>
   );
 }

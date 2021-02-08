@@ -11,7 +11,6 @@ export default class ArticlePage extends Component {
   };
 
   componentDidMount = () => {
-    console.log(this.props);
     const { article_id } = this.props;
     api.fetchArticleById(article_id).then((article) => {
       console.log(article);
