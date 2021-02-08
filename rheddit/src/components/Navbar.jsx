@@ -36,6 +36,7 @@ export default class Navbar extends Component {
             );
           })
         )}
+        <Link to={"/"}>All</Link>
       </nav>
     );
   }
