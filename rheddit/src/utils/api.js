@@ -10,9 +10,9 @@ export const fetchAllTopics = () => {
   });
 };
 
-export const fetchArticles = (topic, author, p) => {
+export const fetchArticles = (topic, author, sort_by, order) => {
   return request
-    .get("/articles", { params: { topic, author, p } })
+    .get("/articles", { params: { topic, author, sort_by, order } })
     .then(({ data: { articles } }) => articles);
 };
 
