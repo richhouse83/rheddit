@@ -19,6 +19,7 @@ function App() {
         <Navbar />
         <Router>
           <ArticlesList path="/" />
+          <ArticlesList path="/articles/:topic" />
         </Router>
       </div>
     </ThemeProvider>

@@ -5,5 +5,13 @@ const request = axios.create({
 });
 
 export const fetchAllTopics = () => {
-  return request.get("/topics").then(({ data: { topics } }) => topics);
+  return request.get("/topics").then(({ data: { topics } }) => {
+    return topics;
+  });
+};
+
+export const fetchArticlesByTopic = (topic) => {
+  return request
+    .get("/articles", { params: { topic } })
+    .then(({ data: { articles } }) => articles);
 };
