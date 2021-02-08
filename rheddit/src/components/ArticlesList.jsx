@@ -10,11 +10,20 @@ export default class ArticlesList extends Component {
   };
 
   componentDidMount = () => {
+    this.getTopics();
+  };
+
+  componentDidUpdate = (prevProps) => {
+    if (this.props.topic !== prevProps.topic) {
+      this.setState({ isLoading: true });
+      this.getTopics();
+    }
+  };
+
+  getTopics = () => {
     const { topic } = this.props;
     api.fetchArticlesByTopic(topic).then((articles) => {
-      this.setState({ articles, isLoading: false }, () =>
-        console.log(this.state)
-      );
+      this.setState({ articles, isLoading: false });
     });
   };
   render() {

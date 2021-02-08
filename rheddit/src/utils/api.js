@@ -15,3 +15,15 @@ export const fetchArticlesByTopic = (topic) => {
     .get("/articles", { params: { topic } })
     .then(({ data: { articles } }) => articles);
 };
+
+export const fetchArticleById = (article_id) => {
+  return request
+    .get(`/articles/${article_id}`)
+    .then(({ data: { article } }) => article);
+};
+
+export const fetchCommentsByArticleId = (article_id) => {
+  return request
+    .get(`/articles/${article_id}/comments`)
+    .then(({ data: { comments } }) => comments);
+};

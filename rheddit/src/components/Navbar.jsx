@@ -10,6 +10,10 @@ export default class Navbar extends Component {
   };
 
   componentDidMount() {
+    this.updateTopics();
+  }
+
+  updateTopics() {
     api.fetchAllTopics().then((topics) => {
       this.setState(() => {
         return { topics, isLoading: false };
@@ -26,7 +30,7 @@ export default class Navbar extends Component {
         ) : (
           topics.map((topic) => {
             return (
-              <Link to={`/articles/${topic.slug}`} key={topic.slug}>
+              <Link to={`/articles/topic/${topic.slug}`} key={topic.slug}>
                 {topic.slug}
               </Link>
             );
