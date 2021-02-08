@@ -13,7 +13,6 @@ export default class ArticlePage extends Component {
   componentDidMount = () => {
     const { article_id } = this.props;
     api.fetchArticleById(article_id).then((article) => {
-      console.log(article);
       this.setState({ article, isLoading: false });
     });
   };
@@ -25,6 +24,24 @@ export default class ArticlePage extends Component {
         return { comments: comments };
       })
     );
+  };
+
+  upVote = () => {
+    this.changeVote(1);
+  };
+
+  downVote = () => {
+    if (this.state.article.votes > 0) this.changeVote(-1);
+  };
+
+  changeVote = (vote) => {
+    api
+      .changeArticleVotes(this.state.article.article_id, vote)
+      .then((newArticle) => {
+        this.setState(({ article }) => {
+          return { article: { ...article, votes: (article.votes += vote) } };
+        });
+      });
   };
 
   render() {
@@ -39,8 +56,12 @@ export default class ArticlePage extends Component {
             <h2>{article.title}</h2>
             <p>{article.body}</p>
             <p className="author">by: {article.author}</p>
-            <button className="vote-button up">^</button>
-            <button className="vote-button down">v</button>
+            <button className="vote-button up" onClick={this.upVote}>
+              ^
+            </button>
+            <button className="vote-button down" onClick={this.downVote}>
+              v
+            </button>
             <p className="votes">{article.votes}</p>
             <button onClick={this.displayComments}>
               {article.comment_count} Comments

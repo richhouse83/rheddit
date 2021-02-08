@@ -8,6 +8,7 @@ export default function ArticleCard(props) {
     synop = synop.slice(0, 50);
     synop += "...";
   }
+
   return (
     <li>
       <p className="topic">{props.topic}</p>
