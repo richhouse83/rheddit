@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Votes from "../Votes";
+import * as api from "../../utils/api";
 
 export default function CommentCard(props) {
   const [reveal, setReveal] = useState(false);
@@ -12,12 +13,27 @@ export default function CommentCard(props) {
   const showComment = () => {
     setReveal((prev) => !prev);
   };
+
+  const deleteComment = () => {
+    api.deleteComment(props.comment_id).then(({ status }) => {
+      if (status === 204) {
+        console.log("deleted");
+        props.removeCommentFromLocal(props.comment_id);
+      }
+    });
+  };
+
+  const isAuthor = props.author === "grumpy19";
   return (
     <li className="comment-card">
       <p className="author" onClick={showComment}>
         {props.author}: {reveal ? props.body : synop}
       </p>
-      <Votes id={props.comment_id} votes={props.votes} type="comments" />
+      {isAuthor ? (
+        <button onClick={deleteComment}>Delete Comment</button>
+      ) : (
+        <Votes id={props.comment_id} votes={props.votes} type="comments" />
+      )}
       <p>{date.toLocaleString()}</p>
     </li>
   );

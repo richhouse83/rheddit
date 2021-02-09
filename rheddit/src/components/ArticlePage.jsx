@@ -61,7 +61,7 @@ export default class ArticlePage extends Component {
     this.setState(
       ({ comments, article }) => {
         return {
-          comments: [...comments, comment],
+          comments: [comment, ...comments],
           article: {
             ...article,
             comment_count: article.comment_count + 1,
@@ -71,6 +71,21 @@ export default class ArticlePage extends Component {
       },
       () => console.log(this.state.comments)
     );
+  };
+
+  removeCommentFromLocal = (comment_id) => {
+    this.setState(({ comments, article }) => {
+      const newComments = comments.filter(
+        (comment) => comment.comment_id !== comment_id
+      );
+      return {
+        comments: newComments,
+        article: {
+          ...article,
+          comment_count: article.comment_count - 1,
+        },
+      };
+    });
   };
 
   render() {
@@ -96,6 +111,7 @@ export default class ArticlePage extends Component {
             comments={comments}
             article_id={article.article_id}
             addCommentToLocal={this.addCommentToLocal}
+            removeCommentFromLocal={this.removeCommentFromLocal}
           />
         </article>
       </main>

@@ -43,3 +43,7 @@ export const addItem = (newItem, article_id) => {
   if (article_id) path += `/${article_id}/comments`;
   return request.post(path, newItem).then(({ data }) => data);
 };
+
+export const deleteComment = (comment_id) => {
+  return request.delete(`/comments/${comment_id}`);
+};

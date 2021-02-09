@@ -6,6 +6,7 @@ export default function CommentsList({
   comments,
   article_id,
   addCommentToLocal,
+  removeCommentFromLocal,
 }) {
   return (
     <section className="comments-box">
@@ -15,8 +16,13 @@ export default function CommentsList({
       />
       <ul className="comments-list">
         {comments.map((comment) => {
-          console.log(comment);
-          return <CommentCard key={comment.comment_id} {...comment} />;
+          return (
+            <CommentCard
+              key={comment.comment_id}
+              {...comment}
+              removeCommentFromLocal={removeCommentFromLocal}
+            />
+          );
         })}
       </ul>
     </section>

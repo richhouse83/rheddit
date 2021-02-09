@@ -21,6 +21,7 @@ export default class AddComment extends Component {
         .addItem(newItem, this.props.article_id)
         .then(({ comment }) => {
           this.props.addCommentToLocal(comment);
+          this.setState({ body: "" });
         })
         .catch((err) => console.dir(err));
     }
