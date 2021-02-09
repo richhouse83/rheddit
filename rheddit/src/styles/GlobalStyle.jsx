@@ -8,6 +8,14 @@ const GlobalStyle = styled.createGlobalStyle`
     border: solid 2px red;
     height: 100vh;
   }
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  input {
+    margin: 10px;
+  }
 `;
 
 export default GlobalStyle;

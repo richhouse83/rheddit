@@ -37,3 +37,7 @@ export const changeVotes = (type, id, vote_count) => {
 export const getTopics = () => {
   return request.get("/topics").then(({ data: { topics } }) => topics);
 };
+
+export const addItem = (type, newItem) => {
+  return request.post(`/${type}`, newItem).then(({ data }) => data);
+};
