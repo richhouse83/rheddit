@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import * as api from "../utils/api";
+import { capitaliseString } from "../utils/utils";
 import { StyledNav } from "../styles/NavBarStyle";
 import { ClipLoader } from "react-spinners";
 import { Link } from "@reach/router";
@@ -28,8 +29,11 @@ export default class Navbar extends Component {
     if (isLoading) return <ClipLoader />;
     return (
       <StyledNav show={showNav} className="navbar">
+        <Link onClick={showNav} to={"/"}>
+          All Articles
+        </Link>
         <Link onClick={toggleNav} to="/topics">
-          topics
+          Topics:
         </Link>
         {topics.map((topic) => {
           return (
@@ -38,14 +42,10 @@ export default class Navbar extends Component {
               to={`/articles/topic/${topic.slug}`}
               key={topic.slug}
             >
-              {topic.slug}
+              {capitaliseString(topic.slug)}
             </Link>
           );
         })}
-
-        <Link onClick={showNav} to={"/"}>
-          All
-        </Link>
       </StyledNav>
     );
   }

@@ -31,13 +31,13 @@ export default function CommentCard(props) {
       </p>
       {isAuthor ? (
         <>
-          <p>{props.votes}</p>
+          <p className="vote-count">Votes: {props.votes}</p>
           <button onClick={deleteComment}>Delete Comment</button>
         </>
       ) : (
         <Votes id={props.comment_id} votes={props.votes} type="comments" />
       )}
-      <p>{date.toLocaleString()}</p>
+      <p className="date">{date.toLocaleString()}</p>
     </li>
   );
 }

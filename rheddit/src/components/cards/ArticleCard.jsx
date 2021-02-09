@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "@reach/router";
 import Votes from "../Votes";
+import { capitaliseString } from "../../utils/utils";
 
 export default function ArticleCard(props) {
   const date = new Date(props.created_at);
@@ -12,7 +13,9 @@ export default function ArticleCard(props) {
 
   return (
     <li className="article-card">
-      <p className="topic">{props.topic}</p>
+      <Link to={`articles/topic/${props.topic}`} className="topic">
+        {capitaliseString(props.topic)}
+      </Link>
       <Link className="title" to={`/articles/${props.article_id}/false`}>
         <h3>{props.title}</h3>
       </Link>

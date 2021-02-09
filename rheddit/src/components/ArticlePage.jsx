@@ -4,6 +4,8 @@ import CommentList from "./CommentList";
 import * as api from "../utils/api";
 import Votes from "./Votes";
 import ErrorDisplay from "./ErrorDisplay";
+import { StyledArticle } from "../styles/ArticleStyle";
+import { Link } from "@reach/router";
 
 export default class ArticlePage extends Component {
   state = {
@@ -11,6 +13,7 @@ export default class ArticlePage extends Component {
     article: {},
     comments: [],
     errMessage: "",
+    showAddComment: false,
     loadComments: this.props.loadComments === "true" ? true : false,
   };
 
@@ -88,32 +91,52 @@ export default class ArticlePage extends Component {
     });
   };
 
+  toggleAddComment = () => {
+    this.setState(({ showAddComment }) => {
+      return { showAddComment: !showAddComment };
+    });
+  };
+
   render() {
-    const { isLoading, article, comments, errMessage } = this.state;
+    const {
+      isLoading,
+      article,
+      comments,
+      errMessage,
+      showAddComment,
+    } = this.state;
     if (isLoading) return <ClipLoader />;
     if (errMessage) return <ErrorDisplay msg={errMessage} />;
     return (
       <main className="article-page">
-        <article>
+        <StyledArticle>
           <p>{article.topic}</p>
           <h2>{article.title}</h2>
+          <Link to={`/users/${article.author}/articles`} className="author">
+            by: {article.author}
+          </Link>
           <p>{article.body}</p>
-          <p className="author">by: {article.author}</p>
           <Votes
             id={article.article_id}
             votes={article.votes}
             type="articles"
           />
-          <button onClick={this.toggleComments}>
-            {article.comment_count} Comments
-          </button>
+          <section className="comment-buttons">
+            <button onClick={this.toggleComments}>
+              {article.comment_count} Comments
+            </button>
+            <button onClick={this.toggleAddComment}>
+              <i className="fas fa-plus"></i>
+            </button>
+          </section>
           <CommentList
             comments={comments}
             article_id={article.article_id}
             addCommentToLocal={this.addCommentToLocal}
             removeCommentFromLocal={this.removeCommentFromLocal}
+            showAddComment={showAddComment}
           />
-        </article>
+        </StyledArticle>
       </main>
     );
   }

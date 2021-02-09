@@ -7,7 +7,7 @@ export const StyledHeader = styled.header`
   width: 100vw;
   background-color: ${({ theme }) => theme.accent};
   display: flex;
-  padding: 0 5px;
+  padding: 0 5%;
   align-items: center;
   justify-content: space-between;
 `;

@@ -32,10 +32,10 @@ export default class Votes extends Component {
       <section className="votes">
         <div className="vote-buttons">
           <button className="vote-button down" onClick={this.downVote}>
-            v
+            <i className="fas fa-thumbs-down"></i>
           </button>
           <button className="vote-button up" onClick={this.upVote}>
-            ^
+            <i className="fas fa-thumbs-up"></i>
           </button>
         </div>
         <p className="vote-count">Votes: {votes}</p>

@@ -7,13 +7,16 @@ export default function CommentsList({
   article_id,
   addCommentToLocal,
   removeCommentFromLocal,
+  showAddComment,
 }) {
   return (
     <section className="comments-box">
-      <AddComment
-        article_id={article_id}
-        addCommentToLocal={addCommentToLocal}
-      />
+      {showAddComment && (
+        <AddComment
+          article_id={article_id}
+          addCommentToLocal={addCommentToLocal}
+        />
+      )}
       <ul className="comments-list">
         {comments.map((comment) => {
           return (

@@ -3,6 +3,7 @@ import { ClipLoader } from "react-spinners";
 import ArticleCard from "./cards/ArticleCard";
 import ErrorDisplay from "./ErrorDisplay";
 import * as api from "../utils/api";
+import { capitaliseString } from "../utils/utils";
 
 export default class ArticlesList extends Component {
   state = {
@@ -65,7 +66,12 @@ export default class ArticlesList extends Component {
     if (errMessage) return <ErrorDisplay msg={errMessage} />;
     return (
       <main className="article-list">
-        <h2>{this.props.topic ? this.props.topic : "All Articles"}</h2>
+        <h2>
+          {this.props.topic
+            ? capitaliseString(this.props.topic)
+            : "All Articles"}
+        </h2>
+        {this.props.username ? <h4>posted by: {this.props.username}</h4> : null}
         <label className="sort-by">
           Sort By:
           <select onChange={this.handleChange} id="sort_by">
@@ -74,7 +80,11 @@ export default class ArticlesList extends Component {
             <option value="comment_count">Comments</option>
           </select>
           <button onClick={this.handleOrder}>
-            {order === "desc" ? "v" : "^"}
+            {order === "desc" ? (
+              <i className="fas fa-chevron-down"></i>
+            ) : (
+              <i className="fas fa-chevron-up"></i>
+            )}
           </button>
         </label>
         <ul>

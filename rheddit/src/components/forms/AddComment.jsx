@@ -30,16 +30,17 @@ export default class AddComment extends Component {
   render() {
     const { body } = this.state;
     return (
-      <form onSubmit={this.handleSubmit}>
-        <textarea
-          rows="5"
-          value={body}
-          placeholder="Add your comment here"
-          onChange={this.handleChange}
-          id="body"
-        />
-        <button>Add Comment</button>
-      </form>
+      <section className="add-comment">
+        <form onSubmit={this.handleSubmit}>
+          <input
+            value={body}
+            placeholder="Add your comment here"
+            onChange={this.handleChange}
+            id="body"
+          />
+          <button>Add Comment</button>
+        </form>
+      </section>
     );
   }
 }

@@ -15,6 +15,7 @@ const GlobalStyle = styled.createGlobalStyle`
   main {
     position: relative;
     top: 3rem;
+    margin: 0 5%;
   }
   body {
     color: ${({ theme }) => theme.color};
@@ -30,6 +31,9 @@ const GlobalStyle = styled.createGlobalStyle`
     text-decoration: none;
     color: ${({ theme }) => theme.accent};
   }
+  a:hover {
+    color: ${({ theme }) => theme.color};
+  }
   h1 {
     margin: 0;
   }
@@ -38,19 +42,25 @@ const GlobalStyle = styled.createGlobalStyle`
     flex-direction: column;
     align-items: center;
   }
-  input {
-    margin: 10px;
+  .add-comment input {
+    margin: 10px 0;
+    width: 100%;
+    height: 2rem;
+  }
+  .add-comment form {
+    align-items: flex-end;
   }
   ul {
     padding: 0;
-    margin: 10px 5%;
+    margin: 10px 0;
   }
   li {
     margin-bottom: 10px;
   }
   .article-card {
-    padding: 5px;
-    border: solid 1px pink;
+    padding: 5%;
+    border: solid 1px ${({ theme }) => theme.color};
+    border-radius: 4px;
     display: grid;
     grid-template: 1fr 1fr 1fr 1fr / 1fr 2fr 1fr;
     grid-template-areas:
@@ -59,6 +69,21 @@ const GlobalStyle = styled.createGlobalStyle`
       "synop synop synop"
       "votes article-comments date";
     align-items: center;
+  }
+  button {
+    background-color: ${({ theme }) => theme.accent};
+    color: ${({ theme }) => theme.color};
+    border: none;
+    padding: 5px;
+    margin: 2px;
+    min-width: 1.5rem;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: ${({ theme }) => theme.buttonHover};
+  }
+  button:focus {
+    outline: none;
   }
   .topic,
   .author,
@@ -108,6 +133,10 @@ const GlobalStyle = styled.createGlobalStyle`
   .fa-bars {
     font-size: 2rem;
     cursor: pointer;
+  }
+  .comment-buttons {
+    display: flex;
+    justify-content: space-between;
   }
 `;
 

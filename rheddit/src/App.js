@@ -14,6 +14,7 @@ const theme = {
   color: "snow",
   bgColor: "#FDAC53",
   accent: "#7e3e91",
+  buttonHover: "#915ca0",
   //purple #7e3e91  yellow #FDAC53
 };
 
