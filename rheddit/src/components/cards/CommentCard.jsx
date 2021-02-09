@@ -1,20 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
+import Votes from "../Votes";
 
 export default function CommentCard(props) {
+  const [reveal, setReveal] = useState(false);
   const date = new Date(props.created_at);
   let synop = props.body;
   if (synop.length > 50) {
     synop = synop.slice(0, 50);
     synop += "...";
   }
+  const showComment = () => {
+    setReveal((prev) => !prev);
+  };
   return (
-    <li>
-      <p className="author">
-        {props.author}: {synop}
+    <li className="comment-card">
+      <p className="author" onClick={showComment}>
+        {props.author}: {reveal ? props.body : synop}
       </p>
-      <button className="vote-button up">^</button>
-      <button className="vote-button down">v</button>
-      <p className="votes">{props.votes}</p>
+      <Votes id={props.comment_id} votes={props.votes} type="comments" />
       <p>{date.toLocaleString()}</p>
     </li>
   );

@@ -23,19 +23,17 @@ export default class Navbar extends Component {
 
   render() {
     const { isLoading, topics } = this.state;
+    if (isLoading) return <ClipLoader />;
     return (
-      <nav>
-        {isLoading ? (
-          <ClipLoader />
-        ) : (
-          topics.map((topic) => {
-            return (
-              <Link to={`/articles/topic/${topic.slug}`} key={topic.slug}>
-                {topic.slug}
-              </Link>
-            );
-          })
-        )}
+      <nav className="navbar">
+        {topics.map((topic) => {
+          return (
+            <Link to={`/articles/topic/${topic.slug}`} key={topic.slug}>
+              {topic.slug}
+            </Link>
+          );
+        })}
+
         <Link to={"/"}>All</Link>
       </nav>
     );

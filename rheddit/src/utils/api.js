@@ -28,8 +28,8 @@ export const fetchCommentsByArticleId = (article_id) => {
     .then(({ data: { comments } }) => comments);
 };
 
-export const changeArticleVotes = (article_id, vote_count) => {
+export const changeVotes = (type, id, vote_count) => {
   return request
-    .patch(`/articles/${article_id}`, { inc_votes: vote_count })
-    .then(({ data: { article } }) => article);
+    .patch(`/${type}/${id}`, { inc_votes: vote_count })
+    .then(({ data }) => data);
 };

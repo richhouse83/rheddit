@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { ClipLoader } from "react-spinners";
 import ArticleCard from "./cards/ArticleCard";
+import ErrorDisplay from "./ErrorDisplay";
 import * as api from "../utils/api";
 
 export default class ArticlesList extends Component {
@@ -9,6 +10,7 @@ export default class ArticlesList extends Component {
     isLoading: true,
     sort_by: "created_at",
     order: "desc",
+    errMessage: "",
   };
 
   componentDidMount = () => {
@@ -25,9 +27,20 @@ export default class ArticlesList extends Component {
   getArticles = () => {
     const { topic, username } = this.props;
     const { sort_by, order } = this.state;
-    api.fetchArticles(topic, username, sort_by, order).then((articles) => {
-      this.setState({ articles, isLoading: false });
-    });
+    api
+      .fetchArticles(topic, username, sort_by, order)
+      .then((articles) => {
+        this.setState({ articles, isLoading: false });
+      })
+      .catch(
+        ({
+          response: {
+            data: { msg },
+          },
+        }) => {
+          this.setState({ errMessage: msg, isLoading: false });
+        }
+      );
   };
 
   handleChange = (event) => {
@@ -47,32 +60,29 @@ export default class ArticlesList extends Component {
   };
 
   render() {
-    const { isLoading, articles, order } = this.state;
+    const { isLoading, articles, order, errMessage } = this.state;
+    if (isLoading) return <ClipLoader />;
+    if (errMessage) return <ErrorDisplay msg={errMessage} />;
     return (
-      <main>
-        {isLoading ? (
-          <ClipLoader />
-        ) : (
-          <>
-            <h2>Articles</h2>
-            <label>
-              Sort By:
-              <select onChange={this.handleChange} id="sort_by">
-                <option value="created_at">Date</option>
-                <option value="votes">Votes</option>
-                <option value="comment_count">Comments</option>
-              </select>
-              <button onClick={this.handleOrder}>
-                {order === "desc" ? "v" : "^"}
-              </button>
-            </label>
-            <ul>
-              {articles.map((article) => {
-                return <ArticleCard key={article.article_id} {...article} />;
-              })}
-            </ul>
-          </>
-        )}
+      <main className="article-list">
+        <h2>Articles</h2>
+        <label>
+          Sort By:
+          <select onChange={this.handleChange} id="sort_by">
+            <option value="created_at">Date</option>
+            <option value="votes">Votes</option>
+            <option value="comment_count">Comments</option>
+          </select>
+          <button onClick={this.handleOrder}>
+            {order === "desc" ? "v" : "^"}
+          </button>
+        </label>
+        <ul>
+          {articles.map((article) => {
+            return <ArticleCard key={article.article_id} {...article} />;
+          })}
+        </ul>
+        )
       </main>
     );
   }

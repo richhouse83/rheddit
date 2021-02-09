@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "@reach/router";
+import Votes from "../Votes";
 
 export default function ArticleCard(props) {
   const date = new Date(props.created_at);
@@ -10,13 +11,13 @@ export default function ArticleCard(props) {
   }
 
   return (
-    <li>
+    <li className="article-card">
       <p className="topic">{props.topic}</p>
-      <Link to={`/articles/${props.article_id}`}>
+      <Link to={`/articles/${props.article_id}/false`}>
         <h3 className="title">{props.title}</h3>
       </Link>
       <p>{date.toLocaleString()}</p>
-      <Link to={`/articles/${props.article_id}`}>
+      <Link to={`/articles/${props.article_id}/false`}>
         <p className="synop">{synop}</p>
       </Link>
       <p>
@@ -25,10 +26,8 @@ export default function ArticleCard(props) {
           {props.author}
         </Link>
       </p>
-      <button className="vote-button up">^</button>
-      <button className="vote-button down">v</button>
-      <p className="votes">{props.votes}</p>
-      <Link to={`/${props.article_id}/comments`}>
+      <Votes id={props.article_id} votes={props.votes} type="articles" />
+      <Link to={`/articles/${props.article_id}/true`}>
         {props.comment_count} Comments
       </Link>
     </li>

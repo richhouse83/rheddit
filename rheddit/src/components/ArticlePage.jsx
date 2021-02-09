@@ -2,73 +2,84 @@ import React, { Component } from "react";
 import { ClipLoader } from "react-spinners";
 import CommentList from "./CommentList";
 import * as api from "../utils/api";
+import Votes from "./Votes";
+import ErrorDisplay from "./ErrorDisplay";
 
 export default class ArticlePage extends Component {
   state = {
     isLoading: true,
     article: {},
     comments: [],
+    errMessage: "",
+    loadComments: this.props.loadComments === "true" ? true : false,
   };
 
   componentDidMount = () => {
     const { article_id } = this.props;
-    api.fetchArticleById(article_id).then((article) => {
-      this.setState({ article, isLoading: false });
-    });
+    api
+      .fetchArticleById(article_id)
+      .then((article) => {
+        this.setState({ article, isLoading: false });
+      })
+      .catch(({ response: { data: { msg } } }) =>
+        this.setState({ errMessage: msg, isLoading: false })
+      );
+    if (this.state.loadComments) {
+      this.displayComments();
+    } else this.setState({ comments: [] });
+  };
+
+  componentDidUpdate = () => {
+    const { comments, loadComments } = this.state;
+    if (!comments.length && loadComments) {
+      this.displayComments();
+    } else if (comments.length && !loadComments) {
+      this.setState({ comments: [] });
+    }
   };
 
   displayComments = () => {
     const { article_id } = this.props;
-    api.fetchCommentsByArticleId(article_id).then((comments) =>
-      this.setState((prev) => {
-        return { comments: comments };
-      })
+    api
+      .fetchCommentsByArticleId(article_id)
+      .then((comments) =>
+        this.setState((prev) => {
+          return { comments: comments };
+        })
+      )
+      .catch((err) => console.dir(err));
+  };
+
+  toggleComments = () => {
+    this.setState(
+      ({ loadComments }) => {
+        return { loadComments: !loadComments };
+      },
+      () => console.log(this.state.loadComments)
     );
   };
 
-  upVote = () => {
-    this.changeVote(1);
-  };
-
-  downVote = () => {
-    if (this.state.article.votes > 0) this.changeVote(-1);
-  };
-
-  changeVote = (vote) => {
-    api
-      .changeArticleVotes(this.state.article.article_id, vote)
-      .then((newArticle) => {
-        this.setState(({ article }) => {
-          return { article: { ...article, votes: (article.votes += vote) } };
-        });
-      });
-  };
-
   render() {
-    const { isLoading, article, comments } = this.state;
+    const { isLoading, article, comments, errMessage } = this.state;
+    if (isLoading) return <ClipLoader />;
+    if (errMessage) return <ErrorDisplay msg={errMessage} />;
     return (
       <main className="article-page">
-        {isLoading ? (
-          <ClipLoader />
-        ) : (
-          <article>
-            <p>{article.topic}</p>
-            <h2>{article.title}</h2>
-            <p>{article.body}</p>
-            <p className="author">by: {article.author}</p>
-            <button className="vote-button up" onClick={this.upVote}>
-              ^
-            </button>
-            <button className="vote-button down" onClick={this.downVote}>
-              v
-            </button>
-            <p className="votes">{article.votes}</p>
-            <button onClick={this.displayComments}>
-              {article.comment_count} Comments
-            </button>
-            <CommentList comments={comments} />
-          </article>
-        )}
+        <article>
+          <p>{article.topic}</p>
+          <h2>{article.title}</h2>
+          <p>{article.body}</p>
+          <p className="author">by: {article.author}</p>
+          <Votes
+            id={article.article_id}
+            votes={article.votes}
+            type="articles"
+          />
+          <button onClick={this.toggleComments}>
+            {article.comment_count} Comments
+          </button>
+          <CommentList comments={comments} />
+        </article>
       </main>
     );
   }
