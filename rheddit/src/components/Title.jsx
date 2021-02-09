@@ -1,9 +1,11 @@
 import React from "react";
+import { StyledHeader } from "../styles/TitleStyle";
 
-export default function Title() {
+export default function Title({ handleToggle }) {
   return (
-    <header className="title">
+    <StyledHeader className="title">
       <h1>RHeddit</h1>
-    </header>
+      <i className="fas fa-bars" onClick={handleToggle}></i>
+    </StyledHeader>
   );
 }

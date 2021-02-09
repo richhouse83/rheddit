@@ -30,13 +30,15 @@ export default class Votes extends Component {
     const { votes } = this.state;
     return (
       <section className="votes">
-        <button className="vote-button down" onClick={this.downVote}>
-          v
-        </button>
-        <button className="vote-button up" onClick={this.upVote}>
-          ^
-        </button>
-        <p className="votes">{votes}</p>
+        <div className="vote-buttons">
+          <button className="vote-button down" onClick={this.downVote}>
+            v
+          </button>
+          <button className="vote-button up" onClick={this.upVote}>
+            ^
+          </button>
+        </div>
+        <p className="vote-count">Votes: {votes}</p>
       </section>
     );
   }

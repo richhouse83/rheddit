@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Title from "./components/Title";
 import Navbar from "./components/Navbar";
 import ArticlesList from "./components/ArticlesList";
@@ -10,17 +11,25 @@ import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./styles/GlobalStyle";
 
 const theme = {
-  color: "black",
-  bgColor: "white",
+  color: "snow",
+  bgColor: "#FDAC53",
+  accent: "#7e3e91",
+  //purple #7e3e91  yellow #FDAC53
 };
 
 function App() {
+  const [showNav, setShowNav] = useState(false);
+
+  const toggleNav = () => {
+    setShowNav((prev) => !prev);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <div className="App">
-        <Title />
-        <Navbar />
+        <Title handleToggle={toggleNav} />
+        <Navbar showNav={showNav} toggleNav={toggleNav} />
         <Router>
           <ArticlesList path="/" />
           <ArticlesList path="/articles/topic/:topic" />

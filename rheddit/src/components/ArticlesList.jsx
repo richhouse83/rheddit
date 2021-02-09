@@ -66,7 +66,7 @@ export default class ArticlesList extends Component {
     return (
       <main className="article-list">
         <h2>{this.props.topic ? this.props.topic : "All Articles"}</h2>
-        <label>
+        <label className="sort-by">
           Sort By:
           <select onChange={this.handleChange} id="sort_by">
             <option value="created_at">Date</option>
@@ -82,7 +82,6 @@ export default class ArticlesList extends Component {
             return <ArticleCard key={article.article_id} {...article} />;
           })}
         </ul>
-        )
       </main>
     );
   }
