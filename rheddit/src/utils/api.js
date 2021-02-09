@@ -38,6 +38,8 @@ export const getTopics = () => {
   return request.get("/topics").then(({ data: { topics } }) => topics);
 };
 
-export const addItem = (type, newItem) => {
-  return request.post(`/${type}`, newItem).then(({ data }) => data);
+export const addItem = (newItem, article_id) => {
+  let path = "/articles";
+  if (article_id) path += `/${article_id}/comments`;
+  return request.post(path, newItem).then(({ data }) => data);
 };

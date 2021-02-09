@@ -51,11 +51,25 @@ export default class ArticlePage extends Component {
   };
 
   toggleComments = () => {
+    this.setState(({ loadComments }) => {
+      return { loadComments: !loadComments };
+    });
+  };
+
+  addCommentToLocal = (comment) => {
+    if (!this.state.comments.length) this.toggleComments();
     this.setState(
-      ({ loadComments }) => {
-        return { loadComments: !loadComments };
+      ({ comments, article }) => {
+        return {
+          comments: [...comments, comment],
+          article: {
+            ...article,
+            comment_count: article.comment_count + 1,
+          },
+          loadComments: true,
+        };
       },
-      () => console.log(this.state.loadComments)
+      () => console.log(this.state.comments)
     );
   };
 
@@ -78,7 +92,11 @@ export default class ArticlePage extends Component {
           <button onClick={this.toggleComments}>
             {article.comment_count} Comments
           </button>
-          <CommentList comments={comments} />
+          <CommentList
+            comments={comments}
+            article_id={article.article_id}
+            addCommentToLocal={this.addCommentToLocal}
+          />
         </article>
       </main>
     );

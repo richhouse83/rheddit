@@ -25,7 +25,7 @@ export default class AddArticle extends Component {
     const { title, author, body, topic } = this.state;
     if ((title, author, body, topic)) {
       const newItem = { title, author, body, topic };
-      api.addItem("articles", newItem).then((data) => {
+      api.addItem(newItem).then((data) => {
         console.log(data);
       });
     }
