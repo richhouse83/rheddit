@@ -33,3 +33,7 @@ export const changeVotes = (type, id, vote_count) => {
     .patch(`/${type}/${id}`, { inc_votes: vote_count })
     .then(({ data }) => data);
 };
+
+export const getTopics = () => {
+  return request.get("/topics").then(({ data: { topics } }) => topics);
+};

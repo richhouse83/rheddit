@@ -65,7 +65,7 @@ export default class ArticlesList extends Component {
     if (errMessage) return <ErrorDisplay msg={errMessage} />;
     return (
       <main className="article-list">
-        <h2>Articles</h2>
+        <h2>{this.props.topic ? this.props.topic : "All Articles"}</h2>
         <label>
           Sort By:
           <select onChange={this.handleChange} id="sort_by">

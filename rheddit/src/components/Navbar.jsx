@@ -26,6 +26,7 @@ export default class Navbar extends Component {
     if (isLoading) return <ClipLoader />;
     return (
       <nav className="navbar">
+        <Link to="/topics">topics</Link>
         {topics.map((topic) => {
           return (
             <Link to={`/articles/topic/${topic.slug}`} key={topic.slug}>
