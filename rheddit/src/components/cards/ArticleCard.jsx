@@ -13,12 +13,12 @@ export default function ArticleCard(props) {
   return (
     <li className="article-card">
       <p className="topic">{props.topic}</p>
-      <Link to={`/articles/${props.article_id}/false`}>
-        <h3 className="title">{props.title}</h3>
+      <Link className="title" to={`/articles/${props.article_id}/false`}>
+        <h3>{props.title}</h3>
       </Link>
-      <p>{date.toLocaleString()}</p>
-      <Link to={`/articles/${props.article_id}/false`}>
-        <p className="synop">{synop}</p>
+      <p className="date">{date.toLocaleString()}</p>
+      <Link className="synop" to={`/articles/${props.article_id}/false`}>
+        <p>{synop}</p>
       </Link>
       <p>
         by:
@@ -26,8 +26,16 @@ export default function ArticleCard(props) {
           {props.author}
         </Link>
       </p>
-      <Votes id={props.article_id} votes={props.votes} type="articles" />
-      <Link to={`/articles/${props.article_id}/true`}>
+      <Votes
+        className="article-votes"
+        id={props.article_id}
+        votes={props.votes}
+        type="articles"
+      />
+      <Link
+        className="article-card-comments"
+        to={`/articles/${props.article_id}/true`}
+      >
         {props.comment_count} Comments
       </Link>
     </li>

@@ -30,7 +30,10 @@ export default function CommentCard(props) {
         {props.author}: {reveal ? props.body : synop}
       </p>
       {isAuthor ? (
-        <button onClick={deleteComment}>Delete Comment</button>
+        <>
+          <p>{props.votes}</p>
+          <button onClick={deleteComment}>Delete Comment</button>
+        </>
       ) : (
         <Votes id={props.comment_id} votes={props.votes} type="comments" />
       )}
