@@ -16,7 +16,7 @@ export default class ArticlePage extends Component {
     comments: [],
     errMessage: "",
     showAddComment: false,
-    loadComments: this.props.loadComments === "true" ? true : false,
+    loadComments: this.props.location.state.loadComments,
     deleted: false,
   };
   componentDidMount = () => {

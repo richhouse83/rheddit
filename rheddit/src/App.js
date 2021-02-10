@@ -37,7 +37,7 @@ function App() {
             <ArticlesList path="/articles/topic/:topic" />
             <ArticlesList path="/users/:username/articles" />
             <AddArticle path="/add-article" />
-            <ArticlePage path="/articles/:article_id/:loadComments" />
+            <ArticlePage path="/articles/:article_id" />
             <TopicsList path="/topics" />
             <ErrorDisplay default />
           </Router>

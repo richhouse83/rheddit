@@ -16,14 +16,26 @@ export default function ArticleCard(props) {
   const isAuthor = props.author === "grumpy19";
   return (
     <li className="article-card">
-      <Link to={`articles/topic/${props.topic}`} className="topic">
+      <Link
+        to={`articles/topic/${props.topic}`}
+        className="topic"
+        state={{ loadComments: false }}
+      >
         {capitaliseString(props.topic)}
       </Link>
-      <Link className="title" to={`/articles/${props.article_id}/false`}>
+      <Link
+        className="title"
+        to={`/articles/${props.article_id}`}
+        state={{ loadComments: false }}
+      >
         <h3>{props.title}</h3>
       </Link>
       <p className="date">{date.toLocaleString()}</p>
-      <Link className="synop" to={`/articles/${props.article_id}/false`}>
+      <Link
+        className="synop"
+        to={`/articles/${props.article_id}`}
+        state={{ loadComments: false }}
+      >
         <p>{synop}</p>
       </Link>
       <p className="author">
@@ -41,7 +53,8 @@ export default function ArticleCard(props) {
       )}
       <Link
         className="article-card-comments"
-        to={`/articles/${props.article_id}/true`}
+        to={`/articles/${props.article_id}`}
+        state={{ loadComments: true }}
       >
         {props.comment_count} Comments
       </Link>

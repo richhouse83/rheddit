@@ -22,7 +22,6 @@ const GlobalStyle = styled.createGlobalStyle`
     color: ${({ theme }) => theme.color};
     background-color: ${({ theme }) => theme.bgColor};
     background-image: url(${bgimg});
-    background-repeat: no-repeat;
     background-size: cover;
     background-blend-mode: color;
     padding-bottom: 5%;
@@ -42,6 +41,11 @@ const GlobalStyle = styled.createGlobalStyle`
   }
   h1 {
     margin: 0;
+  }
+  .loading,
+  .error-display {
+    padding: 5%;
+    margin: 5% 0;
   }
   form {
     display: flex;
@@ -158,6 +162,7 @@ const GlobalStyle = styled.createGlobalStyle`
       grid-template-areas:
         "title title"
         "navbar content";
+      min-height: 100vh;
     }
     .fa-bars {
       visibility: hidden;

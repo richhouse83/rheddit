@@ -94,8 +94,18 @@ export default class ArticlesList extends Component {
       errMessage,
       showAddArticle,
     } = this.state;
-    if (isLoading) return <ClipLoader />;
-    if (errMessage) return <ErrorDisplay msg={errMessage} />;
+    if (isLoading)
+      return (
+        <section className="loading">
+          <ClipLoader />
+        </section>
+      );
+    if (errMessage)
+      return (
+        <section className="error-display">
+          <ErrorDisplay msg={errMessage} />
+        </section>
+      );
     return (
       <section className="article-list">
         <h2>
