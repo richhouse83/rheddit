@@ -10,4 +10,5 @@ export const StyledHeader = styled.header`
   padding: 0 5%;
   align-items: center;
   justify-content: space-between;
+  grid-area: title;
 `;

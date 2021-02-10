@@ -20,4 +20,13 @@ export const StyledNav = styled.nav`
   a:hover {
     color: ${({ theme }) => theme.bgColor};
   }
+  @media only screen and (min-width: 768px) {
+    position: sticky;
+    top: calc(3rem + 10%);
+    margin-left: 5%;
+    left: 0;
+    width: 80%;
+    height: 300px;
+    grid-area: navbar;
+  }
 `;

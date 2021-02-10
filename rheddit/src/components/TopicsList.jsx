@@ -21,11 +21,11 @@ export default class TopicsList extends Component {
     if (isLoading) return <ClipLoader />;
     if (errMessage) return <ErrorDisplay msg={errMessage} />;
     return (
-      <main className="topics-list">
+      <section className="topics-list">
         {topics.map((topic) => {
           return <TopicCard key={topic.slug} {...topic} />;
         })}
-      </main>
+      </section>
     );
   }
 }

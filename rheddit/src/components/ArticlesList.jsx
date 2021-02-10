@@ -97,7 +97,7 @@ export default class ArticlesList extends Component {
     if (isLoading) return <ClipLoader />;
     if (errMessage) return <ErrorDisplay msg={errMessage} />;
     return (
-      <main className="article-list">
+      <section className="article-list">
         <h2>
           {this.props.topic
             ? capitaliseString(this.props.topic)
@@ -131,7 +131,7 @@ export default class ArticlesList extends Component {
             );
           })}
         </ul>
-      </main>
+      </section>
     );
   }
 }

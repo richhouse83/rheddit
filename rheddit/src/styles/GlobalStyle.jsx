@@ -2,15 +2,9 @@ import * as styled from "styled-components";
 import bgimg from "./images/distressed-yellow-wall-texture-background.jpg";
 
 const GlobalStyle = styled.createGlobalStyle`
-  html {
-    background-image: url(${bgimg});
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
   .App {
     text-align: center;
-    overflow: scroll;
-    height: 100vh;
+    height: 100%;
   }
   body,
   input,
@@ -31,6 +25,7 @@ const GlobalStyle = styled.createGlobalStyle`
     background-repeat: no-repeat;
     background-size: cover;
     background-blend-mode: color;
+    padding-bottom: 5%;
   }
   h1,
   h2,
@@ -52,6 +47,7 @@ const GlobalStyle = styled.createGlobalStyle`
     display: flex;
     flex-direction: column;
     align-items: center;
+    align-items: flex-end;
   }
   input,
   textarea {
@@ -62,8 +58,8 @@ const GlobalStyle = styled.createGlobalStyle`
   .add-article-body {
     height: 10rem;
   }
-  .add-comment form {
-    align-items: flex-end;
+  .add-article {
+    margin-top: 10px;
   }
   ul {
     padding: 0;
@@ -151,6 +147,22 @@ const GlobalStyle = styled.createGlobalStyle`
   .article-buttons {
     display: flex;
     justify-content: space-between;
+  }
+  @media only screen and (min-width: 768px) {
+    main {
+      grid-area: content;
+    }
+    .App {
+      display: grid;
+      grid-template: 3rem 1fr/ 1fr 2fr;
+      grid-template-areas:
+        "title title"
+        "navbar content";
+    }
+    .fa-bars {
+      visibility: hidden;
+      position: fixed;
+    }
   }
 `;
 

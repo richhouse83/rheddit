@@ -23,7 +23,7 @@ export default class AddArticle extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const { title, author, body, topic } = this.state;
-    if ((title, author, body, topic)) {
+    if (title && author && body && topic) {
       const newItem = { title, author, body, topic };
       api.addItem(newItem).then(({ article }) => {
         this.props.updateArticles(article);

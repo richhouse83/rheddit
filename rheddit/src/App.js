@@ -31,15 +31,17 @@ function App() {
       <div className="App">
         <Title handleToggle={toggleNav} />
         <Navbar showNav={showNav} toggleNav={toggleNav} />
-        <Router>
-          <ArticlesList path="/" />
-          <ArticlesList path="/articles/topic/:topic" />
-          <ArticlesList path="/users/:username/articles" />
-          <AddArticle path="/add-article" />
-          <ArticlePage path="/articles/:article_id/:loadComments" />
-          <TopicsList path="/topics" />
-          <ErrorDisplay default />
-        </Router>
+        <main>
+          <Router>
+            <ArticlesList path="/" />
+            <ArticlesList path="/articles/topic/:topic" />
+            <ArticlesList path="/users/:username/articles" />
+            <AddArticle path="/add-article" />
+            <ArticlePage path="/articles/:article_id/:loadComments" />
+            <TopicsList path="/topics" />
+            <ErrorDisplay default />
+          </Router>
+        </main>
       </div>
     </ThemeProvider>
   );

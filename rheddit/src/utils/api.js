@@ -44,6 +44,6 @@ export const addItem = (newItem, article_id) => {
   return request.post(path, newItem).then(({ data }) => data);
 };
 
-export const deleteItem = (type, comment_id) => {
-  return request.delete(`/${type}/${comment_id}`);
+export const deleteItem = (type, id) => {
+  return request.delete(`/${type}/${id}`);
 };
