@@ -152,6 +152,21 @@ const GlobalStyle = styled.createGlobalStyle`
     display: flex;
     justify-content: space-between;
   }
+  .signed-in {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+  }
+  .avatar-pic {
+     width: 50px;
+     height: 50px;
+     border-radius: 50px;
+     object-fit: contain;
+     background-color: snow;
+     display: block;
+    }
+  }
   @media only screen and (min-width: 768px) {
     main {
       grid-area: content;
@@ -168,7 +183,7 @@ const GlobalStyle = styled.createGlobalStyle`
       visibility: hidden;
       position: fixed;
     }
-  }
+    
 `;
 
 export default GlobalStyle;

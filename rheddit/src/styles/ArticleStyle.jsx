@@ -8,5 +8,9 @@ export const StyledArticle = styled.article`
   border: solid 1px rgba(255, 250, 250, 0.4);
   border-radius: 4px;
   padding: 5%;
-  margin: 5% 0;
+  margin: 10% 0;
+  color: ${({ theme }) => theme.accent};
+  & ul {
+    list-style: none;
+  }
 `;

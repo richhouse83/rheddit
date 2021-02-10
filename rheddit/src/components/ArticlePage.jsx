@@ -117,45 +117,43 @@ export default class ArticlePage extends Component {
     if (isLoading) return <ClipLoader />;
     if (errMessage) return <ErrorDisplay msg={errMessage} />;
     return (
-      <main className="article-page">
-        <StyledArticle>
-          <p>{article.topic}</p>
-          <h2>{article.title}</h2>
-          <Link to={`/users/${article.author}/articles`} className="author">
-            by: {article.author}
-          </Link>
-          <p>{article.body}</p>
-          {isAuthor ? (
-            <DeleteButton
-              type="articles"
-              votes={article.votes}
-              id={article.article_id}
-              removeFunc={this.redirect}
-            />
-          ) : (
-            <Votes
-              id={article.article_id}
-              votes={article.votes}
-              type="articles"
-            />
-          )}
-          <section className="comment-buttons">
-            <button onClick={this.toggleComments}>
-              {article.comment_count} Comments
-            </button>
-            <button onClick={this.toggleAddComment}>
-              <i className="fas fa-plus"></i>
-            </button>
-          </section>
-          <CommentList
-            comments={comments}
-            article_id={article.article_id}
-            addCommentToLocal={this.addCommentToLocal}
-            removeCommentFromLocal={this.removeCommentFromLocal}
-            showAddComment={showAddComment}
+      <StyledArticle>
+        <p>{article.topic}</p>
+        <h2>{article.title}</h2>
+        <Link to={`/users/${article.author}/articles`} className="author">
+          by: {article.author}
+        </Link>
+        <p>{article.body}</p>
+        {isAuthor ? (
+          <DeleteButton
+            type="articles"
+            votes={article.votes}
+            id={article.article_id}
+            removeFunc={this.redirect}
           />
-        </StyledArticle>
-      </main>
+        ) : (
+          <Votes
+            id={article.article_id}
+            votes={article.votes}
+            type="articles"
+          />
+        )}
+        <section className="comment-buttons">
+          <button onClick={this.toggleComments}>
+            {article.comment_count} Comments
+          </button>
+          <button onClick={this.toggleAddComment}>
+            <i className="fas fa-plus"></i>
+          </button>
+        </section>
+        <CommentList
+          comments={comments}
+          article_id={article.article_id}
+          addCommentToLocal={this.addCommentToLocal}
+          removeCommentFromLocal={this.removeCommentFromLocal}
+          showAddComment={showAddComment}
+        />
+      </StyledArticle>
     );
   }
 }

@@ -47,3 +47,11 @@ export const addItem = (newItem, article_id) => {
 export const deleteItem = (type, id) => {
   return request.delete(`/${type}/${id}`);
 };
+
+export const getAllUsers = () => {
+  return request.get("/users").then(({ data: { users } }) => users);
+};
+
+export const getUser = (username) => {
+  return request.get(`/users/${username}`).then(({ data: { user } }) => user);
+};
