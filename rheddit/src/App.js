@@ -9,7 +9,6 @@ import AddArticle from "./components/forms/AddArticle";
 import { Router } from "@reach/router";
 import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./styles/GlobalStyle";
-import SignIn from "./components/forms/SignIn";
 
 const theme = {
   color: "snow",
@@ -40,7 +39,6 @@ function App() {
             <AddArticle path="/add-article" />
             <ArticlePage path="/articles/:article_id" />
             <TopicsList path="/topics" />
-            <SignIn path="/sign-in" />
             <ErrorDisplay default />
           </Router>
         </main>

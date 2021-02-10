@@ -13,7 +13,7 @@ export default function ArticleCard(props) {
     synop += "...";
   }
 
-  const isAuthor = props.author === "grumpy19";
+  const isAuthor = props.author === localStorage.getItem("rhedditUser");
   return (
     <li className="article-card">
       <Link

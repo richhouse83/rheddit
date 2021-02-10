@@ -4,6 +4,7 @@ import { capitaliseString } from "../utils/utils";
 import { StyledNav } from "../styles/NavBarStyle";
 import { ClipLoader } from "react-spinners";
 import { Link } from "@reach/router";
+import SignIn from "./forms/SignIn";
 
 export default class Navbar extends Component {
   state = {
@@ -29,6 +30,7 @@ export default class Navbar extends Component {
     if (isLoading) return <ClipLoader />;
     return (
       <StyledNav show={showNav} className="navbar">
+        <SignIn />
         <Link onClick={showNav} to={"/"}>
           All Articles
         </Link>

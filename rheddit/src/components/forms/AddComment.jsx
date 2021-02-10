@@ -4,7 +4,7 @@ import * as api from "../../utils/api";
 export default class AddComment extends Component {
   state = {
     body: "",
-    username: "grumpy19",
+    username: localStorage.getItem("rhedditUser"),
   };
 
   handleChange = ({ target: { id, value } }) => {

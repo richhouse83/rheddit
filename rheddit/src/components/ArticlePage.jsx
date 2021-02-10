@@ -112,7 +112,7 @@ export default class ArticlePage extends Component {
       showAddComment,
       deleted,
     } = this.state;
-    const isAuthor = article.author === "grumpy19";
+    const isAuthor = article.author === localStorage.getItem("rhedditUser");
     if (deleted) return <Deleted />;
     if (isLoading) return <ClipLoader />;
     if (errMessage) return <ErrorDisplay msg={errMessage} />;

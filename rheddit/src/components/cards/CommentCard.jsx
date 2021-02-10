@@ -15,7 +15,7 @@ export default function CommentCard(props) {
     setReveal((prev) => !prev);
   };
 
-  const isAuthor = props.author === "grumpy19";
+  const isAuthor = props.author === localStorage.getItem("rhedditUser");
   return (
     <li className="comment-card">
       <p className="comment" onClick={showComment}>

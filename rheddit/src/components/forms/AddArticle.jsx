@@ -5,7 +5,7 @@ export default class AddArticle extends Component {
   state = {
     title: "",
     body: "",
-    author: "grumpy19",
+    author: localStorage.getItem("rhedditUser"),
     topic: this.props.topic || "",
     topics: [],
   };

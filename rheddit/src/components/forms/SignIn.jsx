@@ -5,6 +5,7 @@ export default class SignIn extends Component {
     input: "",
     username: "",
     signedIn: false,
+    notValid: false,
   };
 
   signIn = (event) => {
@@ -14,7 +15,7 @@ export default class SignIn extends Component {
       if (user) {
         localStorage.setItem("rhedditUser", user.username);
         this.setState({ input: "", username: user.username, signedIn: true });
-      } else console.log("not a a user");
+      } else this.setState({ notValid: true });
     });
   };
 
@@ -47,7 +48,8 @@ export default class SignIn extends Component {
   };
 
   render() {
-    const { input, username, avatar_url } = this.state;
+    const { input, username, avatar_url, notValid } = this.state;
+
     if (username)
       return (
         <section className="signed-in">
@@ -68,7 +70,8 @@ export default class SignIn extends Component {
           value={input}
           onChange={this.handleChange}
         />
-        <button>Sign In</button>
+        <button disabled={!input}>Sign In</button>
+        {notValid && <p className="invalid">Not a valid username</p>}
       </form>
     );
   }
