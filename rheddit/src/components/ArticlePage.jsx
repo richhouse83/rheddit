@@ -6,6 +6,8 @@ import Votes from "./Votes";
 import ErrorDisplay from "./ErrorDisplay";
 import { StyledArticle } from "../styles/ArticleStyle";
 import { Link } from "@reach/router";
+import DeleteButton from "./DeleteButton";
+import Deleted from "./Deleted";
 
 export default class ArticlePage extends Component {
   state = {
@@ -15,8 +17,8 @@ export default class ArticlePage extends Component {
     errMessage: "",
     showAddComment: false,
     loadComments: this.props.loadComments === "true" ? true : false,
+    deleted: false,
   };
-
   componentDidMount = () => {
     const { article_id } = this.props;
     api
@@ -97,6 +99,10 @@ export default class ArticlePage extends Component {
     });
   };
 
+  redirect = () => {
+    this.setState({ deleted: true });
+  };
+
   render() {
     const {
       isLoading,
@@ -104,7 +110,10 @@ export default class ArticlePage extends Component {
       comments,
       errMessage,
       showAddComment,
+      deleted,
     } = this.state;
+    const isAuthor = article.author === "grumpy19";
+    if (deleted) return <Deleted />;
     if (isLoading) return <ClipLoader />;
     if (errMessage) return <ErrorDisplay msg={errMessage} />;
     return (
@@ -116,11 +125,20 @@ export default class ArticlePage extends Component {
             by: {article.author}
           </Link>
           <p>{article.body}</p>
-          <Votes
-            id={article.article_id}
-            votes={article.votes}
-            type="articles"
-          />
+          {isAuthor ? (
+            <DeleteButton
+              type="articles"
+              votes={article.votes}
+              id={article.article_id}
+              removeFunc={this.redirect}
+            />
+          ) : (
+            <Votes
+              id={article.article_id}
+              votes={article.votes}
+              type="articles"
+            />
+          )}
           <section className="comment-buttons">
             <button onClick={this.toggleComments}>
               {article.comment_count} Comments

@@ -35,20 +35,17 @@ export default class AddArticle extends Component {
     const { title, body, topics, topic } = this.state;
     return (
       <form onSubmit={this.handleSubmit} className="add-article">
-        {topic ? (
-          <p>Create new article on {topic}</p>
-        ) : (
-          <select onChange={this.handleChange} id="topic">
-            <option value="">Select Topic</option>
-            {topics.map((topic) => {
-              return (
-                <option key={topic.slug} value={topic.slug}>
-                  {topic.slug}
-                </option>
-              );
-            })}
-          </select>
-        )}
+        {topic ? <p>Create new article on {topic}</p> : null}
+        <select onChange={this.handleChange} id="topic">
+          <option value="">{topic ? "Change" : "Select"} Topic</option>
+          {topics.map((topic) => {
+            return (
+              <option key={topic.slug} value={topic.slug}>
+                {topic.slug}
+              </option>
+            );
+          })}
+        </select>
         <input
           value={title}
           placeholder="Article Name"

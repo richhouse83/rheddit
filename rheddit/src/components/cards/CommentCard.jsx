@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Votes from "../Votes";
-import * as api from "../../utils/api";
 import "./CommentCard.css";
 import DeleteButton from "../DeleteButton";
 
