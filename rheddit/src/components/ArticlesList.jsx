@@ -4,6 +4,8 @@ import ArticleCard from "./cards/ArticleCard";
 import ErrorDisplay from "./ErrorDisplay";
 import * as api from "../utils/api";
 import { capitaliseString } from "../utils/utils";
+import SortBy from "./SortBy";
+import AddArticle from "./forms/AddArticle";
 
 export default class ArticlesList extends Component {
   state = {
@@ -12,6 +14,7 @@ export default class ArticlesList extends Component {
     sort_by: "created_at",
     order: "desc",
     errMessage: "",
+    showAddArticle: false,
   };
 
   componentDidMount = () => {
@@ -60,8 +63,37 @@ export default class ArticlesList extends Component {
     );
   };
 
+  toggleAddArticle = () => {
+    this.setState(({ showAddArticle }) => {
+      return { showAddArticle: !showAddArticle };
+    });
+  };
+
+  updateArticles = (newArticle) => {
+    this.setState(({ articles }) => {
+      return { articles: [newArticle, ...articles] };
+    });
+  };
+
+  removeArticleFromLocal = (article_id) => {
+    this.setState(({ articles }) => {
+      const newArticles = articles.filter(
+        (article) => article.article_id !== article_id
+      );
+      return {
+        articles: newArticles,
+      };
+    });
+  };
+
   render() {
-    const { isLoading, articles, order, errMessage } = this.state;
+    const {
+      isLoading,
+      articles,
+      order,
+      errMessage,
+      showAddArticle,
+    } = this.state;
     if (isLoading) return <ClipLoader />;
     if (errMessage) return <ErrorDisplay msg={errMessage} />;
     return (
@@ -72,24 +104,31 @@ export default class ArticlesList extends Component {
             : "All Articles"}
         </h2>
         {this.props.username ? <h4>posted by: {this.props.username}</h4> : null}
-        <label className="sort-by">
-          Sort By:
-          <select onChange={this.handleChange} id="sort_by">
-            <option value="created_at">Date</option>
-            <option value="votes">Votes</option>
-            <option value="comment_count">Comments</option>
-          </select>
-          <button onClick={this.handleOrder}>
-            {order === "desc" ? (
-              <i className="fas fa-chevron-down"></i>
-            ) : (
-              <i className="fas fa-chevron-up"></i>
-            )}
+        <section className="article-buttons">
+          <SortBy
+            order={order}
+            handleChange={this.handleChange}
+            handleOrder={this.handleOrder}
+          />
+          <button onClick={this.toggleAddArticle}>
+            <i className="fas fa-plus"></i>
           </button>
-        </label>
+        </section>
+        {showAddArticle && (
+          <AddArticle
+            topic={this.props.topic}
+            updateArticles={this.updateArticles}
+          />
+        )}
         <ul>
           {articles.map((article) => {
-            return <ArticleCard key={article.article_id} {...article} />;
+            return (
+              <ArticleCard
+                key={article.article_id}
+                {...article}
+                removeArticleFromLocal={this.removeArticleFromLocal}
+              />
+            );
           })}
         </ul>
       </main>

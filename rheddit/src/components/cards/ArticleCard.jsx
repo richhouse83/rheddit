@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "@reach/router";
 import Votes from "../Votes";
 import { capitaliseString } from "../../utils/utils";
+import "./ArticleCard.css";
+import DeleteButton from "../DeleteButton";
 
 export default function ArticleCard(props) {
   const date = new Date(props.created_at);
@@ -11,6 +13,7 @@ export default function ArticleCard(props) {
     synop += "...";
   }
 
+  const isAuthor = props.author === "grumpy19";
   return (
     <li className="article-card">
       <Link to={`articles/topic/${props.topic}`} className="topic">
@@ -26,7 +29,16 @@ export default function ArticleCard(props) {
       <p className="author">
         by: <Link to={`/users/${props.author}/articles`}>{props.author}</Link>
       </p>
-      <Votes id={props.article_id} votes={props.votes} type="articles" />
+      {isAuthor ? (
+        <DeleteButton
+          id={props.article_id}
+          type="articles"
+          votes={props.votes}
+          removeFunc={props.removeArticleFromLocal}
+        />
+      ) : (
+        <Votes id={props.article_id} votes={props.votes} type="articles" />
+      )}
       <Link
         className="article-card-comments"
         to={`/articles/${props.article_id}/true`}

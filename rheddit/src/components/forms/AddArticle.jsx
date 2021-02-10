@@ -6,7 +6,7 @@ export default class AddArticle extends Component {
     title: "",
     body: "",
     author: "grumpy19",
-    topic: "",
+    topic: this.props.topic || "",
     topics: [],
   };
 
@@ -25,26 +25,30 @@ export default class AddArticle extends Component {
     const { title, author, body, topic } = this.state;
     if ((title, author, body, topic)) {
       const newItem = { title, author, body, topic };
-      api.addItem(newItem).then((data) => {
-        console.log(data);
+      api.addItem(newItem).then(({ article }) => {
+        this.props.updateArticles(article);
       });
     }
   };
 
   render() {
-    const { title, body, topics } = this.state;
+    const { title, body, topics, topic } = this.state;
     return (
-      <form onSubmit={this.handleSubmit}>
-        <select onChange={this.handleChange} id="topic">
-          <option value="">Select Topic</option>
-          {topics.map((topic) => {
-            return (
-              <option key={topic.slug} value={topic.slug}>
-                {topic.slug}
-              </option>
-            );
-          })}
-        </select>
+      <form onSubmit={this.handleSubmit} className="add-article">
+        {topic ? (
+          <p>Create new article on {topic}</p>
+        ) : (
+          <select onChange={this.handleChange} id="topic">
+            <option value="">Select Topic</option>
+            {topics.map((topic) => {
+              return (
+                <option key={topic.slug} value={topic.slug}>
+                  {topic.slug}
+                </option>
+              );
+            })}
+          </select>
+        )}
         <input
           value={title}
           placeholder="Article Name"
@@ -52,7 +56,7 @@ export default class AddArticle extends Component {
           id="title"
         />
         <textarea
-          rows="10"
+          className="add-article-body"
           value={body}
           placeholder="Article Body"
           onChange={this.handleChange}

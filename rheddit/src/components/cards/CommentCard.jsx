@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Votes from "../Votes";
 import * as api from "../../utils/api";
+import "./CommentCard.css";
+import DeleteButton from "../DeleteButton";
 
 export default function CommentCard(props) {
   const [reveal, setReveal] = useState(false);
@@ -14,26 +16,19 @@ export default function CommentCard(props) {
     setReveal((prev) => !prev);
   };
 
-  const deleteComment = () => {
-    api.deleteComment(props.comment_id).then(({ status }) => {
-      if (status === 204) {
-        console.log("deleted");
-        props.removeCommentFromLocal(props.comment_id);
-      }
-    });
-  };
-
   const isAuthor = props.author === "grumpy19";
   return (
     <li className="comment-card">
-      <p className="author" onClick={showComment}>
+      <p className="comment" onClick={showComment}>
         {props.author}: {reveal ? props.body : synop}
       </p>
       {isAuthor ? (
-        <>
-          <p className="vote-count">Votes: {props.votes}</p>
-          <button onClick={deleteComment}>Delete Comment</button>
-        </>
+        <DeleteButton
+          id={props.comment_id}
+          type="comments"
+          votes={props.votes}
+          removeFunc={props.removeCommentFromLocal}
+        />
       ) : (
         <Votes id={props.comment_id} votes={props.votes} type="comments" />
       )}
