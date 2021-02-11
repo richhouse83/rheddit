@@ -10,9 +10,9 @@ export const fetchAllTopics = () => {
   });
 };
 
-export const fetchArticles = (topic, author, sort_by, order) => {
+export const fetchArticles = (topic, author, sort_by, order, p) => {
   return request
-    .get("/articles", { params: { topic, author, sort_by, order } })
+    .get("/articles", { params: { topic, author, sort_by, order, p } })
     .then(({ data: { articles } }) => articles);
 };
 
@@ -54,4 +54,10 @@ export const getAllUsers = () => {
 
 export const getUser = (username) => {
   return request.get(`/users/${username}`).then(({ data: { user } }) => user);
+};
+
+export const getArticleCount = (topic, author) => {
+  return request
+    .get("/articles", { params: { topic, author, limit: 1000 } })
+    .then(({ data: { articles } }) => articles.length);
 };

@@ -5,9 +5,9 @@ export default class AddArticle extends Component {
   state = {
     title: "",
     body: "",
-    author: localStorage.getItem("rhedditUser"),
     topic: this.props.topic || "",
     topics: [],
+    errMessage: "",
   };
 
   componentDidMount = () => {
@@ -17,22 +17,30 @@ export default class AddArticle extends Component {
   };
 
   handleChange = ({ target: { id, value } }) => {
-    this.setState({ [id]: value });
+    this.setState({ [id]: value, errMessage: "" });
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const { title, author, body, topic } = this.state;
+    const { title, body, topic } = this.state;
+    const author = localStorage.getItem("rhedditUser");
     if (title && author && body && topic) {
       const newItem = { title, author, body, topic };
-      api.addItem(newItem).then(({ article }) => {
-        this.props.updateArticles(article);
-      });
-    }
+      api
+        .addItem(newItem)
+        .then(({ article }) => {
+          this.props.updateArticles(article);
+          this.setState({ title: "", body: "", errMessage: "" });
+        })
+        .catch((err) => this.setState({ errMessage: err }));
+    } else if (title && body && topic)
+      this.setState({ errMessage: "You must be signed in to post" });
   };
 
   render() {
-    const { title, body, topics, topic } = this.state;
+    const { title, body, topics, topic, errMessage } = this.state;
+    const disabled = !title || !body || !topic;
+    console.log(disabled);
     return (
       <form onSubmit={this.handleSubmit} className="add-article">
         {topic ? <p>Create new article on {topic}</p> : null}
@@ -59,7 +67,8 @@ export default class AddArticle extends Component {
           onChange={this.handleChange}
           id="body"
         />
-        <button>Post Article</button>
+        <button disabled={disabled}>Post Article</button>
+        {errMessage ? <p>{errMessage}</p> : null}
       </form>
     );
   }

@@ -6,6 +6,7 @@ import * as api from "../utils/api";
 import { capitaliseString } from "../utils/utils";
 import SortBy from "./SortBy";
 import AddArticle from "./forms/AddArticle";
+import PageButtons from "./PageButtons";
 
 export default class ArticlesList extends Component {
   state = {
@@ -15,6 +16,7 @@ export default class ArticlesList extends Component {
     order: "desc",
     errMessage: "",
     showAddArticle: false,
+    p: 1,
   };
 
   componentDidMount = () => {
@@ -30,9 +32,9 @@ export default class ArticlesList extends Component {
 
   getArticles = () => {
     const { topic, username } = this.props;
-    const { sort_by, order } = this.state;
+    const { sort_by, order, p } = this.state;
     api
-      .fetchArticles(topic, username, sort_by, order)
+      .fetchArticles(topic, username, sort_by, order, p)
       .then((articles) => {
         this.setState({ articles, isLoading: false });
       })
@@ -86,6 +88,16 @@ export default class ArticlesList extends Component {
     });
   };
 
+  turnPage = (page) => {
+    console.log(page, this.state.p);
+    this.setState(
+      ({ p }) => {
+        return { p: p + page };
+      },
+      () => this.getArticles()
+    );
+  };
+
   render() {
     const {
       isLoading,
@@ -93,7 +105,9 @@ export default class ArticlesList extends Component {
       order,
       errMessage,
       showAddArticle,
+      p,
     } = this.state;
+    const { topic, username } = this.props;
     if (isLoading)
       return (
         <section className="loading">
@@ -119,6 +133,12 @@ export default class ArticlesList extends Component {
             order={order}
             handleChange={this.handleChange}
             handleOrder={this.handleOrder}
+          />
+          <PageButtons
+            p={p}
+            turnPage={this.turnPage}
+            topic={topic}
+            author={username}
           />
           <button onClick={this.toggleAddArticle}>
             <i className="fas fa-plus"></i>

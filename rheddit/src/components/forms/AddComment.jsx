@@ -4,7 +4,7 @@ import * as api from "../../utils/api";
 export default class AddComment extends Component {
   state = {
     body: "",
-    username: localStorage.getItem("rhedditUser"),
+    errMessage: "",
   };
 
   handleChange = ({ target: { id, value } }) => {
@@ -13,22 +13,24 @@ export default class AddComment extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const { username, body } = this.state;
-    if ((username, body)) {
+    const { body } = this.state;
+    const username = localStorage.getItem("rhedditUser");
+    if (username && body) {
       const newItem = { username, body };
       console.log(newItem);
       api
         .addItem(newItem, this.props.article_id)
         .then(({ comment }) => {
           this.props.addCommentToLocal(comment);
-          this.setState({ body: "" });
+          this.setState({ body: "", errMessage: "" });
         })
-        .catch((err) => console.dir(err));
-    }
+        .catch((err) => this.setState({ errMessage: err }));
+    } else if (!username)
+      this.setState({ errMessage: "You must be signed in to post" });
   };
 
   render() {
-    const { body } = this.state;
+    const { body, errMessage } = this.state;
     return (
       <section className="add-comment">
         <form onSubmit={this.handleSubmit}>
@@ -38,7 +40,8 @@ export default class AddComment extends Component {
             onChange={this.handleChange}
             id="body"
           />
-          <button>Add Comment</button>
+          <button disabled={!body}>Add Comment</button>
+          {errMessage && <p>{errMessage}</p>}
         </form>
       </section>
     );
