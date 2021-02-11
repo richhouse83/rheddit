@@ -22,7 +22,6 @@ const GlobalStyle = styled.createGlobalStyle`
     color: ${({ theme }) => theme.color};
     background-color: ${({ theme }) => theme.bgColor};
     background-image: url(${bgimg});
-    background-size: cover;
     background-blend-mode: color;
     padding-bottom: 5%;
   }
@@ -177,16 +176,19 @@ const GlobalStyle = styled.createGlobalStyle`
      display: block;
     }
   }
-  .sign-in-button:disabled {
-    visibility: hidden;
-
+  .page {
+    display: flex;
+    align-items: center;
   }
-  .sign-in-button {
-    transition: 400ms;
+  .page p {
+    margin:0;
+    padding-right: 5px;
+    font-size: 0.8rem;
   }
   @media only screen and (min-width: 768px) {
     main {
       grid-area: content;
+      min-width: 85%;
     }
     .App {
       display: grid;
@@ -195,11 +197,13 @@ const GlobalStyle = styled.createGlobalStyle`
         "title title"
         "navbar content";
       min-height: 100vh;
+      justify-items: center;
     }
     .fa-bars {
       visibility: hidden;
       position: fixed;
     }
+    
     
 `;
 

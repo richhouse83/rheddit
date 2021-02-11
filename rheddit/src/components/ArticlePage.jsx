@@ -8,6 +8,7 @@ import { StyledArticle } from "../styles/ArticleStyle";
 import { Link } from "@reach/router";
 import DeleteButton from "./DeleteButton";
 import Deleted from "./Deleted";
+import PageButtons from "./PageButtons";
 
 export default class ArticlePage extends Component {
   state = {
@@ -18,6 +19,7 @@ export default class ArticlePage extends Component {
     showAddComment: false,
     loadComments: this.props.location.state.loadComments,
     deleted: false,
+    p: 1,
   };
   componentDidMount = () => {
     const { article_id } = this.props;
@@ -30,23 +32,23 @@ export default class ArticlePage extends Component {
         this.setState({ errMessage: msg, isLoading: false })
       );
     if (this.state.loadComments) {
-      this.displayComments();
+      this.displayComments(this.state.p);
     } else this.setState({ comments: [] });
   };
 
   componentDidUpdate = () => {
-    const { comments, loadComments } = this.state;
+    const { comments, loadComments, p } = this.state;
     if (!comments.length && loadComments) {
-      this.displayComments();
+      this.displayComments(p);
     } else if (comments.length && !loadComments) {
       this.setState({ comments: [] });
     }
   };
 
-  displayComments = () => {
+  displayComments = (p) => {
     const { article_id } = this.props;
     api
-      .fetchCommentsByArticleId(article_id)
+      .fetchCommentsByArticleId(article_id, p)
       .then((comments) =>
         this.setState((prev) => {
           return { comments: comments };
@@ -103,6 +105,15 @@ export default class ArticlePage extends Component {
     this.setState({ deleted: true });
   };
 
+  turnPage = (page) => {
+    this.setState(
+      ({ p }) => {
+        return { p: p + page };
+      },
+      () => this.displayComments(this.state.p)
+    );
+  };
+
   render() {
     const {
       isLoading,
@@ -111,6 +122,7 @@ export default class ArticlePage extends Component {
       errMessage,
       showAddComment,
       deleted,
+      p,
     } = this.state;
     const isAuthor = article.author === localStorage.getItem("rhedditUser");
     if (deleted) return <Deleted />;
@@ -142,6 +154,14 @@ export default class ArticlePage extends Component {
           <button onClick={this.toggleComments}>
             {article.comment_count} Comments
           </button>
+          {comments.length !== 0 && (
+            <PageButtons
+              p={p}
+              turnPage={this.turnPage}
+              article_id={article.article_id}
+              type="comments"
+            />
+          )}
           <button onClick={this.toggleAddComment}>
             <i className="fas fa-plus"></i>
           </button>

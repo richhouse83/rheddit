@@ -22,9 +22,9 @@ export const fetchArticleById = (article_id) => {
     .then(({ data: { article } }) => article);
 };
 
-export const fetchCommentsByArticleId = (article_id) => {
+export const fetchCommentsByArticleId = (article_id, p) => {
   return request
-    .get(`/articles/${article_id}/comments`)
+    .get(`/articles/${article_id}/comments`, { params: { p } })
     .then(({ data: { comments } }) => comments);
 };
 
@@ -60,8 +60,10 @@ export const getUser = (username) => {
   return request.get(`/users/${username}`).then(({ data: { user } }) => user);
 };
 
-export const getItemCount = (type, topic, author) => {
+export const getItemCount = (type, topic, author, article_id) => {
+  let path = "/articles";
+  if (article_id) path += `/${article_id}/comments`;
   return request
-    .get(`/${type}`, { params: { topic, author, limit: 1000 } })
+    .get(path, { params: { topic, author, limit: 1000 } })
     .then(({ data }) => data[type].length);
 };

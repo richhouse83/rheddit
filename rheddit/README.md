@@ -1,6 +1,6 @@
 # RHeddit
 
-A example social media website. The hosted site can be viewed working [here](http://chemical-friends.surge.sh/)
+A example social media website. The hosted site can be viewed working [here](http://rheddit.surge.sh/)
 
 To run the site locally on your machine, clone the repo and than run `npm start`.
 

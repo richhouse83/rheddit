@@ -106,7 +106,11 @@ export default class ArticlesList extends Component {
       showAddArticle,
       p,
     } = this.state;
+
     const { topic, username } = this.props;
+
+    const noArticles = !articles.length;
+
     if (isLoading)
       return (
         <section className="loading">
@@ -150,6 +154,7 @@ export default class ArticlesList extends Component {
             updateArticles={this.updateArticles}
           />
         )}
+        {noArticles && <p>No Articles yet, why not add one?</p>}
         <ul>
           {articles.map((article) => {
             return (
@@ -161,13 +166,15 @@ export default class ArticlesList extends Component {
             );
           })}
         </ul>
-        <PageButtons
-          p={p}
-          turnPage={this.turnPage}
-          type="articles"
-          topic={topic}
-          author={username}
-        />
+        {!noArticles && (
+          <PageButtons
+            p={p}
+            turnPage={this.turnPage}
+            type="articles"
+            topic={topic}
+            author={username}
+          />
+        )}
       </section>
     );
   }
