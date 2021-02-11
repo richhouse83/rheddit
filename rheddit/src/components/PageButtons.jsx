@@ -8,19 +8,18 @@ export default class PageButtons extends Component {
   };
 
   componentDidMount = () => {
-    const { topic, author } = this.props;
-    console.log(topic, author);
-    api.getArticleCount(topic, author).then((articleCount) => {
-      const totalPages = Math.ceil(articleCount / 10);
+    const { type, topic, author } = this.props;
+    api.getItemCount(type, topic, author).then((itemCount) => {
+      const totalPages = Math.ceil(itemCount / 10);
       this.setState({ totalPages });
     });
   };
 
   componentDidUpdate = (prevProps) => {
-    const { topic, author } = this.props;
+    const { type, topic, author } = this.props;
     if (topic !== prevProps.topic || author !== prevProps.author) {
-      api.getArticleCount(topic, author).then((articleCount) => {
-        const totalPages = Math.ceil(articleCount / 10);
+      api.getItemCount(type, topic, author).then((itemCount) => {
+        const totalPages = Math.ceil(itemCount / 10);
         this.setState({ totalPages });
       });
     }

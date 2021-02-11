@@ -89,7 +89,6 @@ export default class ArticlesList extends Component {
   };
 
   turnPage = (page) => {
-    console.log(page, this.state.p);
     this.setState(
       ({ p }) => {
         return { p: p + page };
@@ -137,6 +136,7 @@ export default class ArticlesList extends Component {
           <PageButtons
             p={p}
             turnPage={this.turnPage}
+            type="articles"
             topic={topic}
             author={username}
           />
@@ -161,6 +161,13 @@ export default class ArticlesList extends Component {
             );
           })}
         </ul>
+        <PageButtons
+          p={p}
+          turnPage={this.turnPage}
+          type="articles"
+          topic={topic}
+          author={username}
+        />
       </section>
     );
   }

@@ -125,7 +125,7 @@ const GlobalStyle = styled.createGlobalStyle`
     justify-content: flex-start;
     align-items: center;
   }
-  .vote-buttons {
+  .vote-buttons, .delete-button button {
     margin-right: 10px;
   }
   .synop {
@@ -136,7 +136,6 @@ const GlobalStyle = styled.createGlobalStyle`
   }
   .sort-by {
     display: flex;
-    margin-left: 5%;
     font-size: 0.8rem;
     align-items: center;
   }

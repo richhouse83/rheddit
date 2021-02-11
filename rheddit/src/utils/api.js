@@ -56,8 +56,8 @@ export const getUser = (username) => {
   return request.get(`/users/${username}`).then(({ data: { user } }) => user);
 };
 
-export const getArticleCount = (topic, author) => {
+export const getItemCount = (type, topic, author) => {
   return request
-    .get("/articles", { params: { topic, author, limit: 1000 } })
-    .then(({ data: { articles } }) => articles.length);
+    .get(`/${type}`, { params: { topic, author, limit: 1000 } })
+    .then(({ data }) => data[type].length);
 };
