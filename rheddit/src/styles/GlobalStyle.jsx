@@ -38,6 +38,7 @@ const GlobalStyle = styled.createGlobalStyle`
   }
   a:hover {
     color: ${({ theme }) => theme.buttonHover};
+    transition: 400ms;
   }
   h1 {
     margin: 0;
@@ -64,6 +65,9 @@ const GlobalStyle = styled.createGlobalStyle`
   }
   .add-article {
     margin-top: 10px;
+  } 
+  .add-topic {
+    margin-bottom: 10px;
   }
   ul {
     padding: 0;
@@ -84,6 +88,7 @@ const GlobalStyle = styled.createGlobalStyle`
   }
   button:hover {
     background-color: ${({ theme }) => theme.buttonHover};
+    transition: 400ms;
   }
   button:focus {
     outline: none;
@@ -104,6 +109,7 @@ const GlobalStyle = styled.createGlobalStyle`
   }
   .comment:hover {
     color: ${({ theme }) => theme.buttonHover};
+    transition: 400ms;
   }
   .topic {
     grid-area: topic;
@@ -147,9 +153,14 @@ const GlobalStyle = styled.createGlobalStyle`
     cursor: pointer;
   }
   .comment-buttons,
-  .article-buttons {
+  .article-buttons,
+  .topic-button {
     display: flex;
     justify-content: space-between;
+  }
+  .topic-button {
+    flex-direction: row-reverse;
+    padding: 10px 0;
   }
   .signed-in {
     display: flex;
@@ -165,6 +176,13 @@ const GlobalStyle = styled.createGlobalStyle`
      background-color: snow;
      display: block;
     }
+  }
+  .sign-in-button:disabled {
+    visibility: hidden;
+
+  }
+  .sign-in-button {
+    transition: 400ms;
   }
   @media only screen and (min-width: 768px) {
     main {

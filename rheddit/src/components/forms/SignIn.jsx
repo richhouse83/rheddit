@@ -44,7 +44,7 @@ export default class SignIn extends Component {
   };
 
   handleChange = ({ target: { value } }) => {
-    this.setState({ input: value });
+    this.setState({ input: value, notValid: false });
   };
 
   render() {
@@ -70,7 +70,9 @@ export default class SignIn extends Component {
           value={input}
           onChange={this.handleChange}
         />
-        <button disabled={!input}>Sign In</button>
+        <button className="sign-in-button" disabled={!input}>
+          Sign In
+        </button>
         {notValid && <p className="invalid">Not a valid username</p>}
       </form>
     );

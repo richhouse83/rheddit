@@ -44,6 +44,10 @@ export const addItem = (newItem, article_id) => {
   return request.post(path, newItem).then(({ data }) => data);
 };
 
+export const addTopic = (newTopic) => {
+  return request.post("/topics", newTopic).then(({ data }) => data);
+};
+
 export const deleteItem = (type, id) => {
   return request.delete(`/${type}/${id}`);
 };

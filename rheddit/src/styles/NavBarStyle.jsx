@@ -26,7 +26,7 @@ export const StyledNav = styled.nav`
     margin-left: 5%;
     left: 0;
     width: 80%;
-    height: 300px;
+    height: 70vh;
     grid-area: navbar;
   }
 `;

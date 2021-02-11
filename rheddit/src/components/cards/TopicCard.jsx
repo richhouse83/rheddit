@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "@reach/router";
 import { capitaliseString } from "../../utils/utils";
+import "./TopicCard.css";
 
 export default function TopicCard({ slug, description }) {
   return (
