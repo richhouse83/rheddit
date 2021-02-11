@@ -30,10 +30,11 @@ const GlobalStyle = styled.createGlobalStyle`
   h3,
   h4 {
     font-family: "Montserrat", sans-serif;
+    color: ${({ theme }) => theme.hcolor};
   }
   a {
     text-decoration: none;
-    color: ${({ theme }) => theme.accent};
+    color: ${({ theme }) => theme.altTextColor};
   }
   a:hover {
     color: ${({ theme }) => theme.buttonHover};
@@ -101,10 +102,10 @@ const GlobalStyle = styled.createGlobalStyle`
   .vote-count {
     font-size: 0.8rem;
     text-align: left;
-    color: ${({ theme }) => theme.accent};
+    color: ${({ theme }) => theme.altTextColor};
   }
   .comment {
-    color: ${({ theme }) => theme.accent};
+    color: ${({ theme }) => theme.altTextColor};
   }
   .comment:hover {
     color: ${({ theme }) => theme.buttonHover};

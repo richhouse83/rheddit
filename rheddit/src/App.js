@@ -9,28 +9,28 @@ import AddArticle from "./components/forms/AddArticle";
 import { Router } from "@reach/router";
 import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./styles/GlobalStyle";
-
-const theme = {
-  color: "snow",
-  bgColor: "#FDAC53",
-  accent: "#7e3e91",
-  buttonHover: "#915ca0",
-  //purple #7e3e91  yellow #FDAC53
-};
+import { theme1, theme2, theme3 } from "./styles/themes";
 
 function App() {
   const [showNav, setShowNav] = useState(false);
+  const [theme, setTheme] = useState("theme1");
 
   const toggleNav = () => {
     setShowNav((prev) => !prev);
   };
 
+  const themeObj = {
+    theme1: theme1,
+    theme2: theme2,
+    theme3: theme3,
+  };
+
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={themeObj[theme]}>
       <GlobalStyle />
       <div className="App">
         <Title handleToggle={toggleNav} />
-        <Navbar showNav={showNav} toggleNav={toggleNav} />
+        <Navbar showNav={showNav} toggleNav={toggleNav} setTheme={setTheme} />
         <main>
           <Router>
             <ArticlesList path="/" />

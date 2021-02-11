@@ -9,7 +9,7 @@ export const StyledArticle = styled.article`
   border-radius: 4px;
   padding: 5%;
   margin: 10% 0;
-  color: ${({ theme }) => theme.accent};
+  color: ${({ theme }) => theme.altTextColor};
   & ul {
     list-style: none;
   }
