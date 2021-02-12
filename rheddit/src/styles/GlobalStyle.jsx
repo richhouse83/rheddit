@@ -24,6 +24,7 @@ const GlobalStyle = styled.createGlobalStyle`
     background-image: url('https://images.unsplash.com/photo-1536514498073-50e69d39c6cf');
     background-blend-mode: color;
     padding-bottom: 5%;
+    transition: background-color 400ms, color 400ms;
   }
   h1,
   h2,
