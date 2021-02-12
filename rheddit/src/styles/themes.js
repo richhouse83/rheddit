@@ -1,6 +1,7 @@
 export const theme1 = {
   color: "snow",
-  hcolor: "snow",
+  title: "snow",
+  hcolor: "#7e3e91",
   altTextColor: "#7e3e91",
   bgColor: "#FDAC53",
   accent: "#7e3e91",
@@ -9,6 +10,7 @@ export const theme1 = {
 
 export const theme2 = {
   color: "snow",
+  title: "snow",
   hcolor: "snow",
   altTextColor: "snow",
   bgColor: "#7e3e91",
@@ -18,6 +20,7 @@ export const theme2 = {
 
 export const theme3 = {
   color: "snow",
+  title: "darkslategrey",
   hcolor: "darkslategrey",
   altTextColor: "darkslategrey",
   bgColor: "#fffafa5c",

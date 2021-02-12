@@ -11,4 +11,7 @@ export const StyledHeader = styled.header`
   align-items: center;
   justify-content: space-between;
   grid-area: title;
+  & h1 {
+    color: ${({ theme }) => theme.title};
+  }
 `;
