@@ -17,7 +17,7 @@ export default function ArticleCard(props) {
   return (
     <li className="article-card">
       <Link
-        to={`articles/topic/${props.topic}`}
+        to={`/articles/topic/${props.topic}`}
         className="topic"
         state={{ loadComments: false }}
       >

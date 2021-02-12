@@ -9,11 +9,14 @@ import AddArticle from "./components/forms/AddArticle";
 import { Router } from "@reach/router";
 import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./styles/GlobalStyle";
-import { theme1, theme2, theme3 } from "./styles/themes";
+import { theme1, theme2, theme3, theme4 } from "./styles/themes";
 
 function App() {
   const [showNav, setShowNav] = useState(false);
-  const [theme, setTheme] = useState("theme1");
+  const [updateNav, setUpdateNav] = useState(false);
+  const [theme, setTheme] = useState(
+    localStorage.getItem("rhedditTheme") || "theme1"
+  );
 
   const toggleNav = () => {
     setShowNav((prev) => !prev);
@@ -23,6 +26,7 @@ function App() {
     theme1: theme1,
     theme2: theme2,
     theme3: theme3,
+    theme4: theme4,
   };
 
   return (
@@ -30,7 +34,12 @@ function App() {
       <GlobalStyle />
       <div className="App">
         <Title handleToggle={toggleNav} />
-        <Navbar showNav={showNav} toggleNav={toggleNav} setTheme={setTheme} />
+        <Navbar
+          showNav={showNav}
+          toggleNav={toggleNav}
+          setTheme={setTheme}
+          updateNav={updateNav}
+        />
         <main>
           <Router>
             <ArticlesList path="/" />
@@ -38,7 +47,7 @@ function App() {
             <ArticlesList path="/users/:username/articles" />
             <AddArticle path="/add-article" />
             <ArticlePage path="/articles/:article_id" />
-            <TopicsList path="/topics" />
+            <TopicsList path="/topics" setUpdateNav={setUpdateNav} />
             <ErrorDisplay default />
           </Router>
         </main>

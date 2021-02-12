@@ -2,7 +2,8 @@
 
 A example social media website. The hosted site can be viewed working [here](http://rheddit.surge.sh/)
 
-To run the site locally on your machine, clone the repo and than run `npm start`.
+To run the site locally on your machine, clone the repo (`git clone https://github.com/richhouse83/rheddit.git`), navigate to the rheddit directory, run `npm install` to install relevant dependencies and then `npm start`.
+You will need a mminimum of `Node v14` on your machine.
 
 The site has been built using `React`, `Axios @reach/router` and `Style-Components` on the front end, and `Express.js`, `Knex`, and `Postgres` on the back end.
 

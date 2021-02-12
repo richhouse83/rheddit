@@ -1,5 +1,5 @@
 import * as styled from "styled-components";
-import bgimg from "./images/distressed-yellow-wall-texture-background.jpg";
+//import bgimg from "./images/distressed-yellow-wall-texture-background.jpg";
 
 const GlobalStyle = styled.createGlobalStyle`
   .App {
@@ -21,7 +21,7 @@ const GlobalStyle = styled.createGlobalStyle`
   body {
     color: ${({ theme }) => theme.color};
     background-color: ${({ theme }) => theme.bgColor};
-    background-image: url(${bgimg});
+    background-image: url('https://images.unsplash.com/photo-1536514498073-50e69d39c6cf');
     background-blend-mode: color;
     padding-bottom: 5%;
   }

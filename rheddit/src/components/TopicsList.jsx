@@ -17,9 +17,12 @@ export default class TopicsList extends Component {
   };
 
   updateTopics = (newTopic) => {
-    this.setState(({ topics }) => {
-      return { topics: [newTopic, ...topics] };
-    });
+    this.setState(
+      ({ topics }) => {
+        return { topics: [newTopic, ...topics] };
+      },
+      () => this.props.setUpdateNav((prev) => !prev)
+    );
   };
 
   fetchTopics = () => {

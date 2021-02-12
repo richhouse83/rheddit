@@ -16,20 +16,39 @@ export default class Navbar extends Component {
     this.updateTopics();
   }
 
+  componentDidUpdate() {
+    console.log(this.props.updateNav);
+    this.updateTopics();
+  }
+
   updateTopics() {
     api.fetchAllTopics().then((topics) => {
-      this.setState(() => {
-        return { topics, isLoading: false };
-      });
+      if (topics.length !== this.state.topics.length) {
+        this.setState(() => {
+          return { topics, isLoading: false };
+        });
+      }
     });
   }
 
   handleSlider = ({ target: { value } }) => {
-    this.props.setTheme(() => {
-      if (+value === 3) return "theme1";
-      if (+value === 2) return "theme2";
-      else return "theme3";
-    });
+    let theme = "theme1";
+    switch (value) {
+      case "3":
+        theme = "theme1";
+        break;
+      case "2":
+        theme = "theme2";
+        break;
+      case "1":
+        theme = "theme3";
+        break;
+      default:
+        theme = "theme4";
+    }
+
+    this.props.setTheme(theme);
+    localStorage.setItem("rhedditTheme", theme);
   };
 
   render() {
@@ -58,7 +77,7 @@ export default class Navbar extends Component {
         })}
         <label>
           Choose Theme:
-          <input onChange={this.handleSlider} type="range" min="1" max="3" />
+          <input onChange={this.handleSlider} type="range" min="0" max="3" />
         </label>
       </StyledNav>
     );

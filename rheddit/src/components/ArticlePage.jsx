@@ -17,7 +17,9 @@ export default class ArticlePage extends Component {
     comments: [],
     errMessage: "",
     showAddComment: false,
-    loadComments: this.props.location.state.loadComments,
+    loadComments: this.props.location.state
+      ? this.props.location.state.loadComments
+      : false,
     deleted: false,
     p: 1,
   };
@@ -54,7 +56,7 @@ export default class ArticlePage extends Component {
           return { comments: comments };
         })
       )
-      .catch((err) => console.dir(err));
+      .catch((err) => this.setState({ errMessage: err }));
   };
 
   toggleComments = () => {
