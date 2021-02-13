@@ -144,7 +144,10 @@ export default class ArticlesList extends Component {
             topic={topic}
             author={username}
           />
-          <button onClick={this.toggleAddArticle}>
+          <button
+            onClick={this.toggleAddArticle}
+            aria-label="toggle-add-article"
+          >
             <i className="fas fa-plus"></i>
           </button>
         </section>

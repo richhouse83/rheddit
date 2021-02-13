@@ -33,13 +33,19 @@ export default class PageButtons extends Component {
         <p className="page-count">
           Page {page} of {totalPages}
         </p>
-        <button disabled={page === 1} value="-1" onClick={() => turnPage(-1)}>
+        <button
+          disabled={page === 1}
+          value="-1"
+          onClick={() => turnPage(-1)}
+          aria-label="turn-page-back"
+        >
           <i className="fas fa-chevron-left"></i>
         </button>
         <button
           value="1"
           disabled={page === totalPages || totalPages === 0}
           onClick={() => turnPage(1)}
+          aria-label="turn-page-forward"
         >
           <i className="fas fa-chevron-right"></i>
         </button>

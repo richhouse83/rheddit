@@ -61,19 +61,23 @@ export default class AddArticle extends Component {
             );
           })}
         </select>
-        <input
-          value={title}
-          placeholder="Article Name"
-          onChange={this.handleChange}
-          id="title"
-        />
-        <textarea
-          className="add-article-body"
-          value={body}
-          placeholder="Article Body"
-          onChange={this.handleChange}
-          id="body"
-        />
+        <label aria-label="article-name">
+          <input
+            value={title}
+            placeholder="Article Name"
+            onChange={this.handleChange}
+            id="title"
+          />
+        </label>
+        <label aria-label="article-body">
+          <textarea
+            className="add-article-body"
+            value={body}
+            placeholder="Article Body"
+            onChange={this.handleChange}
+            id="body"
+          />
+        </label>
         <button disabled={disabled}>Post Article</button>
         {errMessage ? <p>{errMessage}</p> : null}
       </form>

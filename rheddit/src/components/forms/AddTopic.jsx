@@ -34,19 +34,23 @@ export default class AddTopic extends Component {
     const disabled = !slug || !description;
     return (
       <form onSubmit={this.handleSubmit} className="add-topic">
-        <input
-          value={slug}
-          placeholder="Topic Name"
-          onChange={this.handleChange}
-          id="slug"
-        />
-        <textarea
-          className="add-topic-body"
-          value={description}
-          placeholder="Topic Description"
-          onChange={this.handleChange}
-          id="description"
-        />
+        <label aria-label="topic-name">
+          <input
+            value={slug}
+            placeholder="Topic Name"
+            onChange={this.handleChange}
+            id="slug"
+          />
+        </label>
+        <label aria-label="topic-description">
+          <textarea
+            className="add-topic-body"
+            value={description}
+            placeholder="Topic Description"
+            onChange={this.handleChange}
+            id="description"
+          />
+        </label>
         <button disabled={disabled}>Create Topic</button>
         {errMessage ? <p>{errMessage}</p> : null}
       </form>

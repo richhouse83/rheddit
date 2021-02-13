@@ -14,7 +14,7 @@ export default function SortBy({
         <option value="votes">Votes</option>
         {showCommentCount && <option value="comment_count">Comments</option>}
       </select>
-      <button onClick={handleOrder}>
+      <button aria-label="toggle-order-of-items" onClick={handleOrder}>
         {order === "desc" ? (
           <i className="fas fa-chevron-down"></i>
         ) : (

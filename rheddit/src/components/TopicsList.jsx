@@ -44,7 +44,7 @@ export default class TopicsList extends Component {
     return (
       <section className="topics-list">
         <section className="topic-button">
-          <button onClick={this.toggleAddTopics}>
+          <button onClick={this.toggleAddTopics} aria-label="toggle-add-topic">
             <i className="fas fa-plus"></i>
           </button>
         </section>

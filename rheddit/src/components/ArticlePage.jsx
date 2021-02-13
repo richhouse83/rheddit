@@ -189,7 +189,10 @@ export default class ArticlePage extends Component {
               />
             </>
           )}
-          <button onClick={this.toggleAddComment}>
+          <button
+            onClick={this.toggleAddComment}
+            aria-label="toggle-add-comment"
+          >
             <i className="fas fa-plus"></i>
           </button>
         </section>

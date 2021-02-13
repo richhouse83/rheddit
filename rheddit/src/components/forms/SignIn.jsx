@@ -63,12 +63,14 @@ export default class SignIn extends Component {
       );
     return (
       <form onSubmit={this.signIn}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={input}
-          onChange={this.handleChange}
-        />
+        <label aria-label="sign-in">
+          <input
+            type="text"
+            placeholder="Username"
+            value={input}
+            onChange={this.handleChange}
+          />
+        </label>
         <button className="sign-in-button" disabled={!input}>
           Sign In
         </button>

@@ -41,6 +41,7 @@ export default class Votes extends Component {
             className="vote-button down"
             disabled={votes === -1}
             onClick={this.downVote}
+            aria-label="vote-down"
           >
             <i className="fas fa-thumbs-down"></i>
           </button>
@@ -48,6 +49,7 @@ export default class Votes extends Component {
             className="vote-button up"
             disabled={votes === 1}
             onClick={this.upVote}
+            aria-label="vote-up"
           >
             <i className="fas fa-thumbs-up"></i>
           </button>

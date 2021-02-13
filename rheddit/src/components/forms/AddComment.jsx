@@ -33,12 +33,14 @@ export default class AddComment extends Component {
     return (
       <section className="add-comment">
         <form onSubmit={this.handleSubmit}>
-          <input
-            value={body}
-            placeholder="Add your comment here"
-            onChange={this.handleChange}
-            id="body"
-          />
+          <label aria-label="comment-body">
+            <input
+              value={body}
+              placeholder="Add your comment here"
+              onChange={this.handleChange}
+              id="body"
+            />
+          </label>
           <button disabled={!body}>Add Comment</button>
           {errMessage && <p>{errMessage}</p>}
         </form>
