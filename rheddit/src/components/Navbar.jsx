@@ -17,7 +17,6 @@ export default class Navbar extends Component {
   }
 
   componentDidUpdate() {
-    console.log(this.props.updateNav);
     this.updateTopics();
   }
 

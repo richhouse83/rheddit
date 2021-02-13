@@ -17,7 +17,6 @@ export default class AddComment extends Component {
     const username = localStorage.getItem("rhedditUser");
     if (username && body) {
       const newItem = { username, body };
-      console.log(newItem);
       api
         .addItem(newItem, this.props.article_id)
         .then(({ comment }) => {

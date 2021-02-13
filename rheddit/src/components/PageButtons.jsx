@@ -26,19 +26,19 @@ export default class PageButtons extends Component {
   };
 
   render() {
-    const { p, turnPage } = this.props;
+    const { page, turnPage } = this.props;
     const { totalPages } = this.state;
     return (
       <section className="page">
         <p className="page-count">
-          Page {p} of {totalPages}
+          Page {page} of {totalPages}
         </p>
-        <button disabled={p === 1} value="-1" onClick={() => turnPage(-1)}>
+        <button disabled={page === 1} value="-1" onClick={() => turnPage(-1)}>
           <i className="fas fa-chevron-left"></i>
         </button>
         <button
           value="1"
-          disabled={p === totalPages || totalPages === 0}
+          disabled={page === totalPages || totalPages === 0}
           onClick={() => turnPage(1)}
         >
           <i className="fas fa-chevron-right"></i>

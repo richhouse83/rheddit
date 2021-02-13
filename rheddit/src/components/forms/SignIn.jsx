@@ -30,7 +30,6 @@ export default class SignIn extends Component {
 
   componentDidUpdate = () => {
     if (this.state.signedIn && !this.state.avatar_url) {
-      console.log("now");
       const username = localStorage.getItem("rhedditUser");
       api.getUser(username).then(({ avatar_url, name }) => {
         this.setState({ username, avatar_url, name });

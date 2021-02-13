@@ -16,7 +16,7 @@ export default class ArticlesList extends Component {
     order: "desc",
     errMessage: "",
     showAddArticle: false,
-    p: 1,
+    page: 1,
   };
 
   componentDidMount = () => {
@@ -32,9 +32,9 @@ export default class ArticlesList extends Component {
 
   getArticles = () => {
     const { topic, username } = this.props;
-    const { sort_by, order, p } = this.state;
+    const { sort_by, order, page } = this.state;
     api
-      .fetchArticles(topic, username, sort_by, order, p)
+      .fetchArticles(topic, username, sort_by, order, page)
       .then((articles) => {
         this.setState({ articles, isLoading: false });
       })
@@ -88,10 +88,10 @@ export default class ArticlesList extends Component {
     });
   };
 
-  turnPage = (page) => {
+  turnPage = (nextPage) => {
     this.setState(
-      ({ p }) => {
-        return { p: p + page };
+      ({ page }) => {
+        return { page: page + nextPage };
       },
       () => this.getArticles()
     );
@@ -104,7 +104,7 @@ export default class ArticlesList extends Component {
       order,
       errMessage,
       showAddArticle,
-      p,
+      page,
     } = this.state;
 
     const { topic, username } = this.props;
@@ -138,7 +138,7 @@ export default class ArticlesList extends Component {
             handleOrder={this.handleOrder}
           />
           <PageButtons
-            p={p}
+            page={page}
             turnPage={this.turnPage}
             type="articles"
             topic={topic}
@@ -168,7 +168,7 @@ export default class ArticlesList extends Component {
         </ul>
         {!noArticles && (
           <PageButtons
-            p={p}
+            page={page}
             turnPage={this.turnPage}
             type="articles"
             topic={topic}

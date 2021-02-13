@@ -22,9 +22,9 @@ export const fetchArticleById = (article_id) => {
     .then(({ data: { article } }) => article);
 };
 
-export const fetchCommentsByArticleId = (article_id, p) => {
+export const fetchCommentsByArticleId = (article_id, p, sort_by, order) => {
   return request
-    .get(`/articles/${article_id}/comments`, { params: { p } })
+    .get(`/articles/${article_id}/comments`, { params: { p, sort_by, order } })
     .then(({ data: { comments } }) => comments);
 };
 

@@ -14,3 +14,7 @@
     "votes article-comments date";
   align-items: center;
 }
+.article-card:hover {
+  box-shadow: 1px 3px 6px rgba(94, 93, 93, 0.6);
+  transition: 400ms;
+}

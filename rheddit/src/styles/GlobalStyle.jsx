@@ -187,6 +187,18 @@ const GlobalStyle = styled.createGlobalStyle`
     padding-right: 5px;
     font-size: 0.8rem;
   }
+
+  input[type=range] {
+    width: 100%;
+    background: transparent;
+  }
+
+  input[type="range" i] {
+    appearance: slider-horizontal;
+    color: rgb(157, 150, 142);
+    cursor: pointer;
+  
+}
   @media only screen and (min-width: 768px) {
     main {
       grid-area: content;

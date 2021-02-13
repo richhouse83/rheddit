@@ -17,7 +17,14 @@ export default class AddArticle extends Component {
   };
 
   handleChange = ({ target: { id, value } }) => {
-    this.setState({ [id]: value, errMessage: "" });
+    const author = localStorage.getItem("rhedditUser");
+    if (author) {
+      this.setState({ [id]: value, errMessage: "" });
+    } else
+      this.setState({
+        [id]: value,
+        errMessage: "You must be signed in to post",
+      });
   };
 
   handleSubmit = (event) => {
@@ -40,7 +47,7 @@ export default class AddArticle extends Component {
   render() {
     const { title, body, topics, topic, errMessage } = this.state;
     const disabled = !title || !body || !topic;
-    console.log(disabled);
+
     return (
       <form onSubmit={this.handleSubmit} className="add-article">
         {topic ? <p>Create new article on {topic}</p> : null}

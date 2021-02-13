@@ -9,6 +9,7 @@ import { Link } from "@reach/router";
 import DeleteButton from "./DeleteButton";
 import Deleted from "./Deleted";
 import PageButtons from "./PageButtons";
+import SortBy from "./SortBy";
 
 export default class ArticlePage extends Component {
   state = {
@@ -21,7 +22,9 @@ export default class ArticlePage extends Component {
       ? this.props.location.state.loadComments
       : false,
     deleted: false,
-    p: 1,
+    page: 1,
+    sort_by: "created_at",
+    order: "desc",
   };
   componentDidMount = () => {
     const { article_id } = this.props;
@@ -47,10 +50,11 @@ export default class ArticlePage extends Component {
     }
   };
 
-  displayComments = (p) => {
+  displayComments = (page) => {
     const { article_id } = this.props;
+    const { sort_by, order } = this.state;
     api
-      .fetchCommentsByArticleId(article_id, p)
+      .fetchCommentsByArticleId(article_id, page, sort_by, order)
       .then((comments) =>
         this.setState((prev) => {
           return { comments: comments };
@@ -65,21 +69,32 @@ export default class ArticlePage extends Component {
     });
   };
 
+  handleChange = ({ target: { value } }) => {
+    this.setState({ sort_by: value }, () => this.displayComments());
+  };
+
+  handleOrder = () => {
+    this.setState(
+      ({ order }) => {
+        if (order === "asc") return { order: "desc" };
+        else return { order: "asc" };
+      },
+      () => this.displayComments()
+    );
+  };
+
   addCommentToLocal = (comment) => {
     if (!this.state.comments.length) this.toggleComments();
-    this.setState(
-      ({ comments, article }) => {
-        return {
-          comments: [comment, ...comments],
-          article: {
-            ...article,
-            comment_count: article.comment_count + 1,
-          },
-          loadComments: true,
-        };
-      },
-      () => console.log(this.state.comments)
-    );
+    this.setState(({ comments, article }) => {
+      return {
+        comments: [comment, ...comments],
+        article: {
+          ...article,
+          comment_count: article.comment_count + 1,
+        },
+        loadComments: true,
+      };
+    });
   };
 
   removeCommentFromLocal = (comment_id) => {
@@ -107,12 +122,12 @@ export default class ArticlePage extends Component {
     this.setState({ deleted: true });
   };
 
-  turnPage = (page) => {
+  turnPage = (nextPage) => {
     this.setState(
-      ({ p }) => {
-        return { p: p + page };
+      ({ page }) => {
+        return { page: page + nextPage };
       },
-      () => this.displayComments(this.state.p)
+      () => this.displayComments(this.state.page)
     );
   };
 
@@ -124,9 +139,11 @@ export default class ArticlePage extends Component {
       errMessage,
       showAddComment,
       deleted,
-      p,
+      page,
+      order,
     } = this.state;
     const isAuthor = article.author === localStorage.getItem("rhedditUser");
+
     if (deleted) return <Deleted />;
     if (isLoading) return <ClipLoader />;
     if (errMessage) return <ErrorDisplay msg={errMessage} />;
@@ -157,12 +174,20 @@ export default class ArticlePage extends Component {
             {article.comment_count} Comments
           </button>
           {comments.length !== 0 && (
-            <PageButtons
-              p={p}
-              turnPage={this.turnPage}
-              article_id={article.article_id}
-              type="comments"
-            />
+            <>
+              <PageButtons
+                page={page}
+                turnPage={this.turnPage}
+                article_id={article.article_id}
+                type="comments"
+              />
+              <SortBy
+                handleOrder={this.handleOrder}
+                order={order}
+                handleChange={this.handleChange}
+                showCommentCount={false}
+              />
+            </>
           )}
           <button onClick={this.toggleAddComment}>
             <i className="fas fa-plus"></i>

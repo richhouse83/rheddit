@@ -1,18 +1,20 @@
 import React from "react";
+import { useState } from "react";
 import * as api from "../utils/api";
 import * as utils from "../utils/utils";
 
 export default function DeleteButton({ type, id, votes, removeFunc }) {
+  const [errMessage, setErrMessage] = useState("");
   const deleteItem = () => {
     api
       .deleteItem(type, id)
       .then(({ status }) => {
         if (status === 204) {
-          console.log("deleted");
           removeFunc(id);
+          setErrMessage("");
         }
       })
-      .catch((err) => console.dir(err));
+      .catch((err) => setErrMessage("cannot vote, try again"));
   };
   return (
     <section className="delete-button">
@@ -26,6 +28,7 @@ export default function DeleteButton({ type, id, votes, removeFunc }) {
           <i className="fas fa-thumbs-up"></i>
         )}{" "}
         {votes}
+        {errMessage}
       </p>
     </section>
   );
