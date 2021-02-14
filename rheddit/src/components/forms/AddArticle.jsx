@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import * as api from "../../utils/api";
+import { UserContext } from "../UserContext";
 
 export default class AddArticle extends Component {
   state = {
@@ -10,6 +11,8 @@ export default class AddArticle extends Component {
     errMessage: "",
   };
 
+  static contextType = UserContext;
+
   componentDidMount = () => {
     api.getTopics().then((topics) => {
       this.setState({ topics, isLoading: false });
@@ -17,22 +20,15 @@ export default class AddArticle extends Component {
   };
 
   handleChange = ({ target: { id, value } }) => {
-    const author = localStorage.getItem("rhedditUser");
-    if (author) {
-      this.setState({ [id]: value, errMessage: "" });
-    } else
-      this.setState({
-        [id]: value,
-        errMessage: "You must be signed in to post",
-      });
+    this.setState({ [id]: value, errMessage: "" });
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
     const { title, body, topic } = this.state;
-    const author = localStorage.getItem("rhedditUser");
-    if (title && author && body && topic) {
-      const newItem = { title, author, body, topic };
+    const [user] = this.context;
+    if (title && user && body && topic) {
+      const newItem = { title, author: user, body, topic };
       api
         .addItem(newItem)
         .then(({ article }) => {
@@ -40,14 +36,13 @@ export default class AddArticle extends Component {
           this.setState({ title: "", body: "", errMessage: "" });
         })
         .catch((err) => this.setState({ errMessage: err }));
-    } else if (title && body && topic)
-      this.setState({ errMessage: "You must be signed in to post" });
+    }
   };
 
   render() {
     const { title, body, topics, topic, errMessage } = this.state;
     const disabled = !title || !body || !topic;
-
+    const [user] = this.context;
     return (
       <form onSubmit={this.handleSubmit} className="add-article">
         {topic ? <p>Create new article on {topic}</p> : null}
@@ -79,6 +74,7 @@ export default class AddArticle extends Component {
           />
         </label>
         <button disabled={disabled}>Post Article</button>
+        {!user && <p>You must be signed in to post</p>}
         {errMessage ? <p>{errMessage}</p> : null}
       </form>
     );

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "@reach/router";
 import Votes from "../Votes";
 import { capitaliseString } from "../../utils/utils";
 import "./ArticleCard.css";
 import DeleteButton from "../DeleteButton";
+import { UserContext } from "../UserContext";
 
 export default function ArticleCard(props) {
   const date = new Date(props.created_at);
@@ -13,7 +14,9 @@ export default function ArticleCard(props) {
     synop += "...";
   }
 
-  const isAuthor = props.author === localStorage.getItem("rhedditUser");
+  const [user] = useContext(UserContext);
+
+  const isAuthor = props.author === user;
   return (
     <li className="article-card">
       <Link

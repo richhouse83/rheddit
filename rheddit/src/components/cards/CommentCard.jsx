@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Votes from "../Votes";
 import "./CommentCard.css";
 import DeleteButton from "../DeleteButton";
+import { UserContext } from "../UserContext";
 
 export default function CommentCard(props) {
   const [reveal, setReveal] = useState(false);
@@ -15,7 +16,9 @@ export default function CommentCard(props) {
     setReveal((prev) => !prev);
   };
 
-  const isAuthor = props.author === localStorage.getItem("rhedditUser");
+  const [user] = useContext(UserContext);
+
+  const isAuthor = props.author === user;
   return (
     <li className="comment-card">
       <p className="comment" onClick={showComment}>

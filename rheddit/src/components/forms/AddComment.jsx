@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import * as api from "../../utils/api";
+import { UserContext } from "../UserContext";
 
 export default class AddComment extends Component {
   state = {
     body: "",
     errMessage: "",
   };
+
+  static contextType = UserContext;
 
   handleChange = ({ target: { id, value } }) => {
     this.setState({ [id]: value });
@@ -14,9 +17,9 @@ export default class AddComment extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const { body } = this.state;
-    const username = localStorage.getItem("rhedditUser");
-    if (username && body) {
-      const newItem = { username, body };
+    const [user] = this.context;
+    if (user && body) {
+      const newItem = { username: user, body };
       api
         .addItem(newItem, this.props.article_id)
         .then(({ comment }) => {
@@ -24,12 +27,12 @@ export default class AddComment extends Component {
           this.setState({ body: "", errMessage: "" });
         })
         .catch((err) => this.setState({ errMessage: err }));
-    } else if (!username)
-      this.setState({ errMessage: "You must be signed in to post" });
+    }
   };
 
   render() {
     const { body, errMessage } = this.state;
+    const [user] = this.context;
     return (
       <section className="add-comment">
         <form onSubmit={this.handleSubmit}>
@@ -42,6 +45,7 @@ export default class AddComment extends Component {
             />
           </label>
           <button disabled={!body}>Add Comment</button>
+          {!user && <p>You must be signed in to post</p>}
           {errMessage && <p>{errMessage}</p>}
         </form>
       </section>

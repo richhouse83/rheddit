@@ -61,6 +61,9 @@ const GlobalStyle = styled.createGlobalStyle`
     width: 100%;
     height: 2rem;
   }
+  form label {
+    width: 100%;
+  }
   .add-article-body {
     height: 10rem;
   }
@@ -188,17 +191,6 @@ const GlobalStyle = styled.createGlobalStyle`
     font-size: 0.8rem;
   }
 
-  input[type=range] {
-    width: 100%;
-    background: transparent;
-  }
-
-  input[type="range" i] {
-    appearance: slider-horizontal;
-    color: rgb(157, 150, 142);
-    cursor: pointer;
-  
-}
   @media only screen and (min-width: 768px) {
     main {
       grid-area: content;

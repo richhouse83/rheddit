@@ -10,6 +10,7 @@ import { Router } from "@reach/router";
 import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./styles/GlobalStyle";
 import { theme1, theme2, theme3, theme4 } from "./styles/themes";
+import { UserProvider } from "./components/UserContext";
 
 function App() {
   const [showNav, setShowNav] = useState(false);
@@ -30,29 +31,31 @@ function App() {
   };
 
   return (
-    <ThemeProvider theme={themeObj[theme]}>
-      <GlobalStyle />
-      <div className="App">
-        <Title handleToggle={toggleNav} />
-        <Navbar
-          showNav={showNav}
-          toggleNav={toggleNav}
-          setTheme={setTheme}
-          updateNav={updateNav}
-        />
-        <main>
-          <Router>
-            <ArticlesList path="/" />
-            <ArticlesList path="/articles/topic/:topic" />
-            <ArticlesList path="/users/:username/articles" />
-            <AddArticle path="/add-article" />
-            <ArticlePage path="/articles/:article_id" />
-            <TopicsList path="/topics" setUpdateNav={setUpdateNav} />
-            <ErrorDisplay default />
-          </Router>
-        </main>
-      </div>
-    </ThemeProvider>
+    <UserProvider>
+      <ThemeProvider theme={themeObj[theme]}>
+        <GlobalStyle />
+        <div className="App">
+          <Title handleToggle={toggleNav} />
+          <Navbar
+            showNav={showNav}
+            toggleNav={toggleNav}
+            setTheme={setTheme}
+            updateNav={updateNav}
+          />
+          <main>
+            <Router>
+              <ArticlesList path="/" />
+              <ArticlesList path="/articles/topic/:topic" />
+              <ArticlesList path="/users/:username/articles" />
+              <AddArticle path="/add-article" />
+              <ArticlePage path="/articles/:article_id" />
+              <TopicsList path="/topics" setUpdateNav={setUpdateNav} />
+              <ErrorDisplay default />
+            </Router>
+          </main>
+        </div>
+      </ThemeProvider>
+    </UserProvider>
   );
 }
 

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import * as api from "../../utils/api";
+import { UserContext } from "../UserContext";
 
 export default class AddTopic extends Component {
   state = {
@@ -7,6 +8,7 @@ export default class AddTopic extends Component {
     description: "",
     errMessage: "",
   };
+  static contextType = UserContext;
 
   handleChange = ({ target: { id, value } }) => {
     this.setState({ [id]: value, errMessage: "" });
@@ -15,8 +17,8 @@ export default class AddTopic extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const { slug, description } = this.state;
-    const author = localStorage.getItem("rhedditUser");
-    if (author && slug && description) {
+    const [user] = this.context;
+    if (user && slug && description) {
       const newTopic = { slug, description };
       api
         .addTopic(newTopic)
@@ -25,13 +27,13 @@ export default class AddTopic extends Component {
           this.setState({ slug: "", description: "", errMessage: "" });
         })
         .catch((err) => this.setState({ errMessage: err }));
-    } else if (slug && description)
-      this.setState({ errMessage: "You must be signed in to add a a topic" });
+    }
   };
 
   render() {
     const { slug, description, errMessage } = this.state;
     const disabled = !slug || !description;
+    const [user] = this.context;
     return (
       <form onSubmit={this.handleSubmit} className="add-topic">
         <label aria-label="topic-name">
@@ -52,7 +54,8 @@ export default class AddTopic extends Component {
           />
         </label>
         <button disabled={disabled}>Create Topic</button>
-        {errMessage ? <p>{errMessage}</p> : null}
+        {!user && <p>You must be signed in to create a topic</p>}
+        {errMessage && <p>{errMessage}</p>}
       </form>
     );
   }

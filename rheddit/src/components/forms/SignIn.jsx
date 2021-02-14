@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import * as api from "../../utils/api";
+import { UserContext } from "../UserContext";
+
 export default class SignIn extends Component {
   state = {
     input: "",
@@ -8,38 +10,58 @@ export default class SignIn extends Component {
     notValid: false,
   };
 
+  static contextType = UserContext;
+
   signIn = (event) => {
     event.preventDefault();
+    const [user, setUser] = this.context;
     api.getAllUsers().then((users) => {
-      const user = users.find((user) => user.username === this.state.input);
-      if (user) {
-        localStorage.setItem("rhedditUser", user.username);
-        this.setState({ input: "", username: user.username, signedIn: true });
+      const userFound = users.find(
+        (user) => user.username === this.state.input
+      );
+      if (userFound) {
+        localStorage.setItem("rhedditUser", userFound.username);
+        this.setState({
+          input: "",
+          username: userFound.username,
+          signedIn: true,
+        });
+        setUser(userFound.username);
       } else this.setState({ notValid: true });
     });
   };
 
   componentDidMount = () => {
-    const username = localStorage.getItem("rhedditUser");
-    if (username) {
-      api.getUser(username).then(({ avatar_url, name }) => {
-        this.setState({ username, avatar_url, name, signedIn: true });
-      });
+    const [user] = this.context;
+    if (user) {
+      api
+        .getUser(user)
+        .then(({ avatar_url, name }) => {
+          this.setState({ username: user, avatar_url, name, signedIn: true });
+        })
+        .catch((err) => console.log(err));
     }
   };
 
   componentDidUpdate = () => {
     if (this.state.signedIn && !this.state.avatar_url) {
-      const username = localStorage.getItem("rhedditUser");
-      api.getUser(username).then(({ avatar_url, name }) => {
-        this.setState({ username, avatar_url, name });
-      });
+      const [user] = this.context;
+      if (user) {
+        api
+          .getUser(user)
+          .then(({ avatar_url, name }) => {
+            this.setState({ username: user, avatar_url, name });
+          })
+          .catch((err) => console.log(err));
+      }
     }
   };
 
   signOut = () => {
     localStorage.removeItem("rhedditUser");
+    const [user, setUser] = this.context;
     this.setState({ username: "", avatar_url: "", name: "", signedIn: false });
+    setUser(null);
   };
 
   handleChange = ({ target: { value } }) => {
