@@ -10,6 +10,7 @@ import DeleteButton from "./DeleteButton";
 import Deleted from "./Deleted";
 import PageButtons from "./PageButtons";
 import SortBy from "./SortBy";
+import { UserContext } from "./UserContext";
 
 export default class ArticlePage extends Component {
   state = {
@@ -26,6 +27,8 @@ export default class ArticlePage extends Component {
     sort_by: "created_at",
     order: "desc",
   };
+  static contextType = UserContext;
+
   componentDidMount = () => {
     const { article_id } = this.props;
     api
@@ -142,7 +145,8 @@ export default class ArticlePage extends Component {
       page,
       order,
     } = this.state;
-    const isAuthor = article.author === localStorage.getItem("rhedditUser");
+    const [user] = this.context;
+    const isAuthor = article.author === user;
 
     if (deleted) return <Deleted />;
     if (isLoading) return <ClipLoader />;
