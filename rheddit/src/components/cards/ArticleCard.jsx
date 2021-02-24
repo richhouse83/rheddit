@@ -6,9 +6,19 @@ import "./ArticleCard.css";
 import DeleteButton from "../DeleteButton";
 import { UserContext } from "../UserContext";
 
-export default function ArticleCard(props) {
-  const date = new Date(props.created_at);
-  let synop = props.body;
+export default function ArticleCard({
+  author,
+  created_at,
+  topic,
+  body,
+  comment_count,
+  article_id,
+  title,
+  votes,
+  removeArticleFromLocal,
+}) {
+  const date = new Date(created_at);
+  let synop = body;
   if (synop.length > 100) {
     synop = synop.slice(0, 100);
     synop += "...";
@@ -16,50 +26,50 @@ export default function ArticleCard(props) {
 
   const [user] = useContext(UserContext);
 
-  const isAuthor = props.author === user;
+  const isAuthor = author === user;
   return (
     <li className="article-card">
       <Link
-        to={`/articles/topic/${props.topic}`}
+        to={`/articles/topic/${topic}`}
         className="topic"
         state={{ loadComments: false }}
       >
-        {capitaliseString(props.topic)}
+        {capitaliseString(topic)}
       </Link>
       <Link
         className="title"
-        to={`/articles/${props.article_id}`}
+        to={`/articles/${article_id}`}
         state={{ loadComments: false }}
       >
-        <h3>{props.title}</h3>
+        <h3>{title}</h3>
       </Link>
       <p className="date">{date.toLocaleString()}</p>
       <Link
         className="synop"
-        to={`/articles/${props.article_id}`}
+        to={`/articles/${article_id}`}
         state={{ loadComments: false }}
       >
         <p>{synop}</p>
       </Link>
       <p className="author">
-        by: <Link to={`/users/${props.author}/articles`}>{props.author}</Link>
+        by: <Link to={`/users/${author}/articles`}>{author}</Link>
       </p>
       {isAuthor ? (
         <DeleteButton
-          id={props.article_id}
+          id={article_id}
           type="articles"
-          votes={props.votes}
-          removeFunc={props.removeArticleFromLocal}
+          votes={votes}
+          removeFunc={removeArticleFromLocal}
         />
       ) : (
-        <Votes id={props.article_id} votes={props.votes} type="articles" />
+        <Votes id={article_id} votes={votes} type="articles" />
       )}
       <Link
         className="article-card-comments"
-        to={`/articles/${props.article_id}`}
+        to={`/articles/${article_id}`}
         state={{ loadComments: true }}
       >
-        {props.comment_count} Comments
+        {comment_count} Comments
       </Link>
     </li>
   );

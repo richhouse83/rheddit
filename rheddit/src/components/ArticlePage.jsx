@@ -31,6 +31,7 @@ export default class ArticlePage extends Component {
 
   componentDidMount = () => {
     const { article_id } = this.props;
+    const { page, loadComments } = this.state;
     api
       .fetchArticleById(article_id)
       .then((article) => {
@@ -39,8 +40,8 @@ export default class ArticlePage extends Component {
       .catch(({ response: { data: { msg } } }) =>
         this.setState({ errMessage: msg, isLoading: false })
       );
-    if (this.state.loadComments) {
-      this.displayComments(this.state.p);
+    if (loadComments) {
+      this.displayComments(page);
     } else this.setState({ comments: [] });
   };
 
@@ -87,7 +88,8 @@ export default class ArticlePage extends Component {
   };
 
   addCommentToLocal = (comment) => {
-    if (!this.state.comments.length) this.toggleComments();
+    const { comments } = this.state;
+    if (!comments.length) this.toggleComments();
     this.setState(({ comments, article }) => {
       return {
         comments: [comment, ...comments],

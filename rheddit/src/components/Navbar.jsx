@@ -31,6 +31,7 @@ export default class Navbar extends Component {
   }
 
   handleSlider = ({ target: { value } }) => {
+    const { setTheme } = this.props;
     let theme = "theme1";
     switch (value) {
       case "3":
@@ -46,14 +47,16 @@ export default class Navbar extends Component {
         theme = "theme4";
     }
 
-    this.props.setTheme(theme);
+    setTheme(theme);
     localStorage.setItem("rhedditTheme", theme);
   };
 
   render() {
     const { isLoading, topics } = this.state;
     const { showNav, toggleNav } = this.props;
+
     if (isLoading) return <ClipLoader />;
+
     return (
       <StyledNav show={showNav} className="navbar">
         <SignIn />

@@ -4,10 +4,17 @@ import "./CommentCard.css";
 import DeleteButton from "../DeleteButton";
 import { UserContext } from "../UserContext";
 
-export default function CommentCard(props) {
+export default function CommentCard({
+  author,
+  body,
+  created_at,
+  comment_id,
+  votes,
+  removeCommentFromLocal,
+}) {
   const [reveal, setReveal] = useState(false);
-  const date = new Date(props.created_at);
-  let synop = props.body;
+  const date = new Date(created_at);
+  let synop = body;
   if (synop.length > 50) {
     synop = synop.slice(0, 50);
     synop += "...";
@@ -18,21 +25,21 @@ export default function CommentCard(props) {
 
   const [user] = useContext(UserContext);
 
-  const isAuthor = props.author === user;
+  const isAuthor = author === user;
   return (
     <li className="comment-card">
       <p className="comment" onClick={showComment}>
-        {props.author}: {reveal ? props.body : synop}
+        {author}: {reveal ? body : synop}
       </p>
       {isAuthor ? (
         <DeleteButton
-          id={props.comment_id}
+          id={comment_id}
           type="comments"
-          votes={props.votes}
-          removeFunc={props.removeCommentFromLocal}
+          votes={votes}
+          removeFunc={removeCommentFromLocal}
         />
       ) : (
-        <Votes id={props.comment_id} votes={props.votes} type="comments" />
+        <Votes id={comment_id} votes={votes} type="comments" />
       )}
       <p className="date">{date.toLocaleString()}</p>
     </li>

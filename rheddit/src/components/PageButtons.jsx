@@ -9,6 +9,7 @@ export default class PageButtons extends Component {
 
   componentDidMount = () => {
     const { type, topic, author, article_id } = this.props;
+
     api.getItemCount(type, topic, author, article_id).then((itemCount) => {
       const totalPages = Math.ceil(itemCount / 10);
       this.setState({ totalPages });
@@ -17,6 +18,7 @@ export default class PageButtons extends Component {
 
   componentDidUpdate = (prevProps) => {
     const { type, topic, author, article_id } = this.props;
+
     if (topic !== prevProps.topic || author !== prevProps.author) {
       api.getItemCount(type, topic, author, article_id).then((itemCount) => {
         const totalPages = Math.ceil(itemCount / 10);
@@ -28,6 +30,7 @@ export default class PageButtons extends Component {
   render() {
     const { page, turnPage } = this.props;
     const { totalPages } = this.state;
+
     return (
       <section className="page">
         <p className="page-count">
